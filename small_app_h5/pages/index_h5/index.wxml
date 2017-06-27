@@ -1,0 +1,113 @@
+<view class="html">
+  <view class="body">
+    <view class="layout">
+      <!-- banner start -->
+      <view class="banner swiper-container">
+        <!-- 未登录 start -->
+        <view class="user_info" wx-if="{{!isLogin}}" bindtap="jumpLogin">
+          <image src="http://s2.vas.wpscdn.cn/vip/styles/wappay/img/user.png" alt="" class="user_img"></image>
+          <text class="p loginout_txt">立即登录，开启你的云文档之旅</text>
+        </view>
+        <!-- 未登录 end -->
+        <!-- 登录后 start -->
+        <view class="user_info" wx-if="{{isLogin}}">
+          <image src="{{userinfo.pic}}" alt="" class="user_img"></image>
+          <view class="user_txt">
+            <view class="userinfo_name">{{userinfo.nickname}}</view>
+            <span class="user_logo logo_svip" class="{{!isL40 && 'logo_svip_gray'}}"></span>
+            <!-- 超级 点亮 logo_svip， 置灰 logo_svip_gray -->
+            <span class="user_logo logo_dvip" class="{{!isL12 && 'logo_dvip_gray'}}"></span>
+            <!-- 稻壳 点亮 logo_dvip， 置灰 logo_dvip_gray -->
+            <span class="user_logo logo_wvip" class="{{!isL20 && 'logo_wvip_gray'}}"></span>
+            <!-- wps 点亮 logo_wvip， 置灰 logo_wvip_gray -->
+            <view class="cb"></view>
+            <p class="user_time" wx-if="{{expire_time}}">有效期：{{expire_time | date("yyyy-MM-dd")}}</p>
+          </view>
+          <navigator href="javascript:void(0)" bindtap="loginOut" class="user_btn">注销账号</navigator>
+        </view>
+        <!-- 登录后 end -->
+        <ul class="vip_card swiper-wrapper">
+          <!-- wps会员 -->
+          <li class="swiper-slide card_list">
+            <view class="card_list_main card1">
+              <navigator href="javascript:void(0)" class="card_more" bindtap="cnzzCollect('查看全部特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-wps.html?source=android_vip_open', true, true)">查看16项更多特权 >></navigator>
+            </view>
+          </li>
+          <!-- 稻壳会员 -->
+          <li class="swiper-slide card_list">
+            <view class="card_list_main card2">
+              <navigator href="javascript:void(0)" class="card_more" bindtap="cnzzCollect('查看全部特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-docer.html?source=android_vip_open', true, true)">查看10项更多特权 >></navigator>
+            </view>
+          </li>
+          <!-- 超级会员 -->
+          <li class="swiper-slide card_list">
+            <view class="card_list_main card3">
+              <span class="card_more">点击图标可查看特权</span>
+              <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-wps.html?source=android_vip_open', true, true)" class="card_logo" title="WPS会员"></navigator>
+              <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-docer.html?source=android_vip_open', true, true)" class="card_logo" title="稻壳会员"></navigator>
+              <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-super.html?source=android_vip_open', true, true)" class="card_logo" title="专属会员"></navigator>
+            </view>
+          </li>
+        </ul>
+        <ul class="vip_dot">
+          <li class="{{activeIndex == 0 && 'active'}}"></li>
+          <li class="{{activeIndex == 1 && 'active'}}"></li>
+          <li class="{{activeIndex == 2 && 'active'}}"></li>
+        </ul>
+      </view>
+
+      <!-- 开通月份 start -->
+      <view class="section">
+        <view class="mouth_top">
+          <text class="h3 mouth_title">开通月份</text>
+          <navigator href="javascript:void(0);" wx-if="{{monthList.length > 3}}" bindtap="setValue('showDuration', true)" bindtap="cnzzCollect('点击其他月份')" class="mouth_more">其它月份<span class="arrow_right"></span></navigator>
+        </view>
+        <!-- 默认显示、选中下面月份 -->
+        <ul class="mouth_change clearfix" wx-if="{{showMonthEsta}}">
+          <li wx-for="monthList" wx:for-item="el" wx-if="{{$index < 3}}" bindtap="selectPack($index, el.monthNum ? el.totalUnitPrice : 0)" bindtap="cnzzCollect('切换月份')">
+            <navigator href="javascript:void(0)" class="mouth_list" class="{{selectIndex === $index ? 'mouth_list_default' : ''}}">
+              <!-- 选中 mouth_list_default -->
+              <span class="time" wx-if="{{el.monthNum && el.monthNum < 13}}">{{el.monthNum + '个月'}}</span>
+              <span class="time" wx-if="{{el.monthNum && el.monthNum > 12}}">{{el.monthNum/12 + '年'}}</span>
+              <span class="time" wx-if="{{!el.monthNum}}">连续包月</span>
+              <span class="price" wx-if="{{el.monthNum}}">￥<span class="strong">{{el.totalUnitPrice}}</span>
+              <view class="txt">{{'(' + el.unitPrice + '元/月)'}}</view>
+              </span>
+              <span class="price" wx-if="{{!el.monthNum}}">{{'(' + el.unitPrice + '元/次月)'}}</span>
+            </navigator>
+          </li>
+        </ul>
+        <!-- 改了月份之后只展示下面一个月份 -->
+        <ul class="mouth_change clearfix" wx-if="{{showMonthEstaSelect}}">
+          <li class="mouth_select">
+            <navigator href="javascript:void(0)" class="mouth_list mouth_list_select">
+              <span wx-if="{{selectMonthData.monthNum && selectMonthData.monthNum < 13}}" class="time">{{selectMonthData.monthNum + '个月'}}</span>
+              <span wx-if="{{selectMonthData.monthNum && selectMonthData.monthNum > 12}}" class="time">{{selectMonthData.monthNum/12 + '年'}}</span>
+              <span wx-if="{{!selectMonthData.monthNum}}" class="time">连续包月</span>
+              <!--<span wx-if="{{selectMonthData.monthNum}}" class="price">￥<span class="strong">{{selectMonthData.totalUnitPrice}}</span>
+              <span">{{'(' + selectMonthData.unitPrice + '元/月)'}}</span>
+              </span>-->
+              <span wx-if="{{!selectMonthData.monthNum}}" class="price">{{'(' + selectMonthData.unitPrice + '元/次月)'}}</span>
+            </navigator>
+          </li>
+        </ul>
+      </view>
+      <!-- 开通月份 end -->
+
+      <!-- 使用优惠券 start -->
+		<div class="section">
+			<p class="yhq" bindtap="checkLogin" bindtap="couponList.length > 0 && hasUsableCoupon && selectMonthData.hasusablecoupon && setValue('showCoupon', true)" bindtap="cnzzCollect('点击优惠券')">
+				<span class="yhq_title">使用优惠券：</span>
+				<span class="yhq_name" wx-if="{{couponList.length > 0 && hasUsableCoupon && selectMonthData.hasusablecoupon}}">
+					<span class="yhq_span">WPS会员专用券</span>
+					<span class="yhq_span">{{'满' + par_min_pay + '减' + par_price + '元'}}</span>
+				</span><!-- 没有优惠券加入 yhq_name_gray -->
+				<span style="display: none" class="yhq_name_gray" wx-if="{{couponList.length == 0 || !hasUsableCoupon || !selectMonthData.hasusablecoupon}}">
+					<span class="yhq_span">暂无优惠券</span>
+				</span>
+			</p>
+		</div>
+		<!-- 使用优惠券 end -->
+    </view>
+  </view>
+</view>

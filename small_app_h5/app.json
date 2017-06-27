@@ -1,0 +1,12 @@
+{
+  "pages":[
+    "pages/index_h5/index",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "购买WPS会员",
+    "navigationBarTextStyle":"black"
+  }
+}

@@ -1,0 +1,765 @@
+.vip_card {
+      position: absolute;
+}
+a,
+abbr,
+address,
+article,
+aside,
+audio,
+b,
+blockquote,
+body,
+caption,
+cite,
+code,
+dd,
+del,
+dfn,
+dialog,
+div,
+dl,
+dt,
+em,
+fieldset,
+figure,
+footer,
+form,
+h1,
+h2,
+.h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+hr,
+html,
+i,
+iframe,
+.img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+p,
+pre,
+q,
+samp,
+section,
+span,
+strong,
+sub,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr,
+ul,
+var,
+video {
+    border: 0;
+    margin: 0;
+    outline: 0;
+    padding: 0
+}
+a,
+a:link,
+a:visited {
+    color: #525252;
+    text-decoration: none
+}
+.html {
+    height: 100%;
+    background: #f2f2f2;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%
+}
+
+.body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    font-family: roboto, "Heiti SC", Helvetica, "Droidsansfallback", "Droid Sans", '\5FAE\8F6F\96C5\9ED1', ProximaThin, "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+    -webkit-touch-callout: none;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    -webkit-font-smoothing: antialiased;
+    color: #525252;
+    background: #f2f2f2;
+    line-height: 20px
+}
+
+b,
+strong {
+    font-weight: bold
+}
+.img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+    font-size: 0;
+    background: transparent
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%
+}
+th,
+td,
+caption {
+    vertical-align: middle;
+    font-weight: normal;
+    text-align: left
+}
+textarea {
+    resize: none;
+    border: 0;
+    padding: 8px 0
+}
+
+input,
+button,
+select,
+textarea {
+    outline: none;
+    -webkit-appearance: none
+}
+
+li {
+    list-style: none
+}
+
+h1,
+h2,
+.h3,
+h4,
+h5 {
+    font-weight: normal
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0
+}
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.cb {
+    clear: both
+}
+
+.ui_img {
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/ui_img.png?v=6-9-10-31");
+    background-size: 200px 200px;
+    background-repeat: no-repeat
+}
+
+.border {
+    border: 1px solid #e9e9e9
+}
+
+.pop {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%
+}
+
+.box {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 304px;
+    background: #fff
+}
+
+.mask {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3)
+}
+
+.top {
+    height: 50px;
+    line-height: 50px;
+    background: #f5484c;
+    color: #fff;
+    padding: 0 28px
+}
+
+.top_return {
+    display: block;
+    float: left;
+    width: 40px;
+    height: 50px;
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/ui_img.png?v=6-9-10-31");
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    background-position: -170px -125px
+}
+
+.top_title {
+    float: left;
+    padding-left: 7px;
+    font-size: 1.3333333333333333em
+}
+
+.user_name {
+    float: right;
+    font-size: 1em
+}
+.red {
+    color: #f5484c
+}
+
+.gray {
+    color: #999
+}
+
+.layout {
+    margin-bottom: 55px;
+    width: 100%;
+    overflow: hidden
+}
+
+.user_info {
+    position: relative;
+    margin: 0 19.333333333333332px;
+    height: 62px;
+    border-bottom: 1px solid #e9e9e9
+}
+
+.user_img {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%
+}
+
+navigator.user_btn,
+navigator.user_btn:link,
+navigator.user_btn:visited {
+    position: absolute;
+    width: 78px;
+    height: 26px;
+    line-height: 24px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto 0;
+    text-align: center;
+    border: 1px solid #b4b4b4;
+    border-radius: 5px;
+    background: #fff;
+    font-size: 12px
+}
+
+navigator.user_btn:active {
+    background-color: #f5484c;
+    color: #fff;
+    border-color: #f5484c
+}
+
+.user_txt {
+    margin: 0 88px 0 44px
+}
+
+.userinfo_name {
+    float: left;
+    padding-top: 14px;
+    font-size: 16px;
+    color: #b4b4b4;
+    margin-right: 5px;
+    max-width: 93px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap
+}
+
+.user_time {
+    font-size: 12px;
+    color: #b4b4b4
+}
+
+.user_logo {
+    display: block;
+    float: left;
+    width: 17px;
+    height: 20px;
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/ui_img.png?v=6-9-10-31");
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    margin-top: 14px
+}
+
+.logo_svip {
+    background-position: -30px 0
+}
+
+.logo_dvip {
+    background-position: -50px 0
+}
+
+.logo_wvip {
+    background-position: -70px 0
+}
+
+.logo_svip_gray {
+    background-position: -30px -20px
+}
+
+.logo_dvip_gray {
+    background-position: -50px -20px
+}
+
+.logo_wvip_gray {
+    background-position: -70px -20px
+}
+
+.loginout_txt {
+    margin-left: 44px;
+    color: #b4b4b4;
+    font-size: 12px;
+    line-height: 62px
+}
+
+.banner {
+    position: relative;
+    height: 316.6666666666667px;
+    background-color: #fbf9fa
+}
+
+.vip_card {
+    position: absolute;
+    width: 1118px;
+    height: 210px;
+    left: 0;
+    top: 74.66666666666667px
+}
+
+.card_list {
+    position: relative;
+    float: left;
+    width: 346.6666666666667px;
+    height: 210px
+}
+
+.card_list_main {
+    position: relative;
+    width: 346.6666666666667px;
+    height: 210px;
+    margin: 0 auto;
+    background-size: 346.6666666666667px 210px;
+    background-position: center center
+}
+
+.card1 {
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/wpscard.jpg?v=6-9-10-31");
+    background-repeat: no-repeat
+}
+
+.card3 {
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/supercard.jpg?v=6-9-10-31");
+    background-repeat: no-repeat
+}
+
+.card2 {
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/docercard.png?v=6-9-10-31");
+    background-repeat: no-repeat
+}
+
+.card_more,
+navigator.card_more,
+navigator.card_more:link,
+navigator.card_more:visited {
+    position: absolute;
+    top: 41px;
+    right: 20px;
+    color: #fff;
+    font-size: 12px;
+    opacity: .75;
+    font-size: .9em;
+    text-align: right
+}
+
+navigator.card_more:hover,
+navigator.card_more:active {
+    text-decoration: underline
+}
+
+.card_logo {
+    display: block;
+    float: left;
+    width: 56px;
+    height: 60px;
+    margin: 103px 0 0 46px
+}
+
+.vip_dot {
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    width: 100%;
+    height: 8px
+}
+
+.vip_dot li {
+    display: inline-block;
+    vertical-align: middle;
+    width: 8px;
+    height: 8px;
+    margin: 0 5px;
+    border-radius: 8px;
+    background: #e6e6e6
+}
+
+.vip_dot li.active {
+    background: #f5484c
+}
+
+.section {
+    background: #fff;
+    margin-bottom: 17px;
+    border: 1px solid #e9e9e9
+}
+
+.mouth_top {
+    padding: 0 12px;
+    line-height: 46px;
+    height: 46px;
+    overflow: hidden
+}
+
+.mouth_title {
+    float: left
+}
+
+a.mouth_more,
+a.mouth_more:link,
+a.mouth_more:visited,
+a.mouth_more:active {
+    display: block;
+    float: right;
+    color: #999
+}
+.arrow_right {
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    height: 46px;
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/ui_img.png?v=6-9-10-31");
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    background-position: 0 11px
+}
+
+.mouth_change {
+    margin-left: 12px
+}
+
+.mouth_change li {
+    float: left;
+    width: 33.3%;
+    padding-right: .8em
+}
+
+.mouth_change li.mouth_select {
+    width: 50%;
+    float: none;
+    margin: 0 auto
+}
+
+a.mouth_list,
+a.mouth_list:link,
+a.mouth_list:visited {
+    color: #b4b4b4
+}
+
+a.mouth_list:active,
+a.mouth_list_default,
+a.mouth_list_default:link,
+a.mouth_list_default:visited,
+a.mouth_list_select,
+a.mouth_list_select:link,
+a.mouth_list_select:visited,
+a.mouth_list_select:active {
+    border: 1px solid #f5484c;
+    color: #f5484c;
+    background-color: #fffafa
+}
+
+.mouth_list {
+    display: block;
+    height: 80px;
+    hpadding-bottom: 5px;
+    border: 1px solid #b4b4b4;
+    border-radius: 3px;
+    margin-bottom: 31px;
+    text-align: center
+}
+
+.mouth_list .time {
+    display: block;
+    line-height: 25px;
+    margin-top: 8px;
+    font-size: 1.2em
+}
+
+.mouth_list .price span.txt {
+    font-size: 12px
+}
+
+.mouth_list .price span.strong {
+    font-size: 1.2em
+}
+
+.mouth_list_select {
+    height: 72px;
+    margin-bottom: 23px
+}
+
+.yhq {
+    line-height: 53px;
+    padding: 0 12px
+}
+
+.yhq_name {
+    padding-left: 12px;
+    color: #f5484c
+}
+
+.yhq_name_gray {
+    color: #999
+}
+
+.foot {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 55px;
+    line-height: 55px;
+    background: #fff
+}
+
+.foot .prize {
+    float: left;
+    padding-left: 12px
+}
+
+.foot .strong {
+    font-size: 1.6em
+}
+
+.qiye {
+    background: #fffafa;
+    text-align: center;
+    color: #f5484c
+}
+
+a.pay_btn,
+a.pay_btn:link,
+a.pay_btn:visited {
+    display: block;
+    float: right;
+    height: 55px;
+    width: 32%;
+    text-align: center;
+    background: #f5484c;
+    color: #fff;
+    font-size: 20px
+}
+
+a.pay_btn:active {
+    background-color: #f2181d
+}
+
+a.pay_btn_gray,
+a.pay_btn_gray:link,
+a.pay_btn_gray:visited,
+a.pay_btn_gray:active {
+    background-color: #999
+}
+
+.box_top {
+    position: relative;
+    line-height: 30px;
+    padding: 7px 0;
+    text-align: center;
+    border-bottom: 1px solid #e9e9e9
+}
+
+text.box_title {
+    font-weight: bold
+}
+
+text.box_title_big {
+    font-size: 1.0666666666666667em
+}
+
+a.return,
+a.return:link,
+a.return:visited {
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/ui_img.png?v=6-9-10-31");
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    background-position: 5px -45px
+}
+
+.time_ul li {
+    height: 46px;
+    line-height: 46px;
+    border-bottom: 1px solid #e9e9e9;
+    text-align: center;
+    padding-left: 37px
+}
+
+.yhq_ul {
+    height: 233px;
+    overflow-y: auto
+}
+
+.yhq_ul li {
+    height: 46px;
+    line-height: 46px;
+    border-bottom: 1px solid #e9e9e9;
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/ui_img.png?v=6-9-10-31");
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    background-position: -155px 13px;
+    padding-left: 66px
+}
+
+.pay_ul li {
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #e9e9e9;
+    padding-left: 64px;
+    background-image: url("http://s5.vas.wpscdn.cn/vip/styles/wappay/img/ui_img.png?v=6-9-10-31");
+    background-size: 200px 200px;
+    background-repeat: no-repeat
+}
+
+.pay_ul li.wechat_pay {
+    background-position: -150px -25px
+}
+
+.pay_ul li.zhifubao_pay {
+    background-position: -150px -75px
+}
+
+li.time_select,
+li.yhq_select,
+li.pay_select {
+    background-color: #f4f4f4;
+    color: #f5484c
+}
+
+.time_span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 7em;
+    text-align: left
+}
+
+.yhq_span {
+    margin-right: 15px
+}
+
+.box_pay_price {
+    margin-left: 15px
+}
+
+.abnormal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -15px 0 0 -100px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    text-align: center
+}
+
+@media all and (orientation:portrait) and (max-width:374px) {
+    .banner {
+        height: 257.5px
+    }
+    .vip_card {
+        width: 858px;
+        height: 157.5px;
+        top: 76px
+    }
+    .card_list {
+        width: 260px;
+        height: 157.5px
+    }
+    .card_list_main {
+        width: 260px;
+        height: 157.5px;
+        background-size: 260px 157.5px
+    }
+    .card_more,
+    navigator.card_more,
+    navigator.card_more:link,
+    navigator.card_more:visited {
+        top: 27px;
+        left: 50%
+    }
+    .card_logo {
+        width: 46px;
+        height: 55px;
+        margin: 76px 0 0 31px
+    }
+}
+
+@media all and (orientation:landscape) and (min-width:700px) {
+    .banner {
+        background-size: 100% 333.3333333333333px
+    }
+}
