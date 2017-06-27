@@ -470,10 +470,10 @@ navigator.card_more:active {
     float: left
 }
 
-a.mouth_more,
-a.mouth_more:link,
-a.mouth_more:visited,
-a.mouth_more:active {
+navigator.mouth_more,
+navigator.mouth_more:link,
+navigator.mouth_more:visited,
+navigator.mouth_more:active {
     display: block;
     float: right;
     color: #999
@@ -505,20 +505,20 @@ a.mouth_more:active {
     margin: 0 auto
 }
 
-a.mouth_list,
-a.mouth_list:link,
-a.mouth_list:visited {
+navigator.mouth_list,
+navigator.mouth_list:link,
+navigator.mouth_list:visited {
     color: #b4b4b4
 }
 
-a.mouth_list:active,
-a.mouth_list_default,
-a.mouth_list_default:link,
-a.mouth_list_default:visited,
-a.mouth_list_select,
-a.mouth_list_select:link,
-a.mouth_list_select:visited,
-a.mouth_list_select:active {
+navigator.mouth_list:active,
+navigator.mouth_list_default,
+navigator.mouth_list_default:link,
+navigator.mouth_list_default:visited,
+navigator.mouth_list_select,
+navigator.mouth_list_select:link,
+navigator.mouth_list_select:visited,
+navigator.mouth_list_select:active {
     border: 1px solid #f5484c;
     color: #f5484c;
     background-color: #fffafa
@@ -594,9 +594,9 @@ a.mouth_list_select:active {
     color: #f5484c
 }
 
-a.pay_btn,
-a.pay_btn:link,
-a.pay_btn:visited {
+navigator.pay_btn,
+navigator.pay_btn:link,
+navigator.pay_btn:visited {
     display: block;
     float: right;
     height: 55px;
@@ -607,14 +607,14 @@ a.pay_btn:visited {
     font-size: 20px
 }
 
-a.pay_btn:active {
+navigator.pay_btn:active {
     background-color: #f2181d
 }
 
-a.pay_btn_gray,
-a.pay_btn_gray:link,
-a.pay_btn_gray:visited,
-a.pay_btn_gray:active {
+navigator.pay_btn_gray,
+navigator.pay_btn_gray:link,
+navigator.pay_btn_gray:visited,
+navigator.pay_btn_gray:active {
     background-color: #999
 }
 
@@ -634,9 +634,9 @@ text.box_title_big {
     font-size: 1.0666666666666667em
 }
 
-a.return,
-a.return:link,
-a.return:visited {
+navigator.return,
+navigator.return:link,
+navigator.return:visited {
     position: absolute;
     top: 6px;
     left: 5px;
