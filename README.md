@@ -1,0 +1,2 @@
+# small_application_for_h5pay
+wps会员微信公众号，购买会员h5支付页面，扩展到小程序
