@@ -14,41 +14,53 @@
           <image src="{{userinfo.pic}}" alt="" class="user_img"></image>
           <view class="user_txt">
             <view class="userinfo_name">{{userinfo.nickname}}</view>
-            <span class="user_logo logo_svip" class="{{!isL40 && 'logo_svip_gray'}}"></span>
+            <text class="user_logo logo_svip" class="{{!isL40 && 'logo_svip_gray'}}"></text>
             <!-- 超级 点亮 logo_svip， 置灰 logo_svip_gray -->
-            <span class="user_logo logo_dvip" class="{{!isL12 && 'logo_dvip_gray'}}"></span>
+            <text class="user_logo logo_dvip" class="{{!isL12 && 'logo_dvip_gray'}}"></text>
             <!-- 稻壳 点亮 logo_dvip， 置灰 logo_dvip_gray -->
-            <span class="user_logo logo_wvip" class="{{!isL20 && 'logo_wvip_gray'}}"></span>
+            <text class="user_logo logo_wvip" class="{{!isL20 && 'logo_wvip_gray'}}"></text>
             <!-- wps 点亮 logo_wvip， 置灰 logo_wvip_gray -->
             <view class="cb"></view>
-            <p class="user_time" wx:if="{{expire_time}}">有效期：{{expire_time | date("yyyy-MM-dd")}}</p>
+            <text class="user_time" wx:if="{{expire_time}}">有效期：{{expire_time | date("yyyy-MM-dd")}}</text>
           </view>
           <navigator href="javascript:void(0)" bindtap="loginOut" class="user_btn">注销账号</navigator>
         </view>
         <!-- 登录后 end -->
-        <ul class="vip_card swiper-wrapper">
-          <!-- wps会员 -->
-          <li class="swiper-slide card_list">
+        <!--<ul class="vip_card swiper-wrapper">-->
+        <!-- wps会员 -->
+        <!--<li class="swiper-slide card_list">
             <view class="card_list_main card1">
               <navigator href="javascript:void(0)" class="card_more" bindtap="cnzzCollect('查看全部特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-wps.html?source=android_vip_open', true, true)">查看16项更多特权 >></navigator>
             </view>
-          </li>
-          <!-- 稻壳会员 -->
-          <li class="swiper-slide card_list">
+          </li>-->
+        <!-- 稻壳会员 -->
+        <!--<li class="swiper-slide card_list">
             <view class="card_list_main card2">
               <navigator href="javascript:void(0)" class="card_more" bindtap="cnzzCollect('查看全部特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-docer.html?source=android_vip_open', true, true)">查看10项更多特权 >></navigator>
             </view>
-          </li>
-          <!-- 超级会员 -->
-          <li class="swiper-slide card_list">
+          </li>-->
+        <!-- 超级会员 -->
+        <!--<li class="swiper-slide card_list">
             <view class="card_list_main card3">
-              <span class="card_more">点击图标可查看特权</span>
+              <text class="card_more">点击图标可查看特权</text>
               <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-wps.html?source=android_vip_open', true, true)" class="card_logo" title="WPS会员"></navigator>
               <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-docer.html?source=android_vip_open', true, true)" class="card_logo" title="稻壳会员"></navigator>
               <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-super.html?source=android_vip_open', true, true)" class="card_logo" title="专属会员"></navigator>
             </view>
           </li>
         </ul>
+        <ul class="vip_dot">
+          <li class="{{activeIndex == 0 && 'active'}}"></li>
+          <li class="{{activeIndex == 1 && 'active'}}"></li>
+          <li class="{{activeIndex == 2 && 'active'}}"></li>
+        </ul>-->
+        <swiper style="height:210px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="test">
+          <block wx:for="{{imgUrls}}">
+            <swiper-item>
+              <image src="{{item}}" class="slide-image card_list_main card{{index+1}}" style="margin-left: 15px;"/>
+            </swiper-item>
+          </block>
+        </swiper>
         <ul class="vip_dot">
           <li class="{{activeIndex == 0 && 'active'}}"></li>
           <li class="{{activeIndex == 1 && 'active'}}"></li>
@@ -60,20 +72,23 @@
       <view class="section">
         <view class="mouth_top">
           <text class="h3 mouth_title">开通月份</text>
-          <navigator href="javascript:void(0);" wx:if="{{monthList.length > 3}}" bindtap="setValue('showDuration', true)" bindtap="cnzzCollect('点击其他月份')" class="mouth_more">其它月份<span class="arrow_right"></span></navigator>
+          <navigator href="javascript:void(0);" wx:if="{{monthList.length > 3}}" bindtap="setValue('showDuration', true)" bindtap="cnzzCollect('点击其他月份')" class="mouth_more">其它月份
+            <text class="arrow_right"></text>
+          </navigator>
         </view>
         <!-- 默认显示、选中下面月份 -->
         <ul class="mouth_change clearfix" wx:if="{{showMonthEsta}}">
-          <li wx-for="monthList" wx:for-item="el" wx:if="{{$index < 3}}" bindtap="selectPack($index, el.monthNum ? el.totalUnitPrice : 0)" bindtap="cnzzCollect('切换月份')">
-            <navigator href="javascript:void(0)" class="mouth_list" class="{{selectIndex === $index ? 'mouth_list_default' : ''}}">
+          <li wx:for="{{monthList}}" wx:for-item="el" wx:if="{{index < 3}}" bindtap="selectPack(index, el.monthNum ? el.totalUnitPrice : 0)" bindtap="cnzzCollect('切换月份')">
+            <navigator href="javascript:void(0)" class="mouth_list {{selectIndex === index ? 'mouth_list_default' : ''}}">
               <!-- 选中 mouth_list_default -->
-              <span class="time" wx:if="{{el.monthNum && el.monthNum < 13}}">{{el.monthNum + '个月'}}</span>
-              <span class="time" wx:if="{{el.monthNum && el.monthNum > 12}}">{{el.monthNum/12 + '年'}}</span>
-              <span class="time" wx:if="{{!el.monthNum}}">连续包月</span>
-              <span class="price" wx:if="{{el.monthNum}}">￥<span class="strong">{{el.totalUnitPrice}}</span>
-              <view class="txt">{{'(' + el.unitPrice + '元/月)'}}</view>
-              </span>
-              <span class="price" wx:if="{{!el.monthNum}}">{{'(' + el.unitPrice + '元/次月)'}}</span>
+              <text class="time" wx:if="{{el.monthNum && el.monthNum < 13}}">{{el.monthNum + '个月'}}</text>
+              <text class="time" wx:if="{{el.monthNum && el.monthNum > 12}}">{{el.monthNum/12 + '年'}}</text>
+              <text class="time" wx:if="{{!el.monthNum}}">连续包月</text>
+              <text class="price" wx:if="{{el.monthNum}}">￥
+                <text class="strong">{{el.totalUnitPrice}}</text>
+                <view class="txt">{{'(' + el.unitPrice + '元/月)'}}</view>
+              </text>
+              <text class="price" wx:if="{{!el.monthNum}}">{{'(' + el.unitPrice + '元/次月)'}}</text>
             </navigator>
           </li>
         </ul>
@@ -81,13 +96,13 @@
         <ul class="mouth_change clearfix" wx:if="{{showMonthEstaSelect}}">
           <li class="mouth_select">
             <navigator href="javascript:void(0)" class="mouth_list mouth_list_select">
-              <span wx:if="{{selectMonthData.monthNum && selectMonthData.monthNum < 13}}" class="time">{{selectMonthData.monthNum + '个月'}}</span>
-              <span wx:if="{{selectMonthData.monthNum && selectMonthData.monthNum > 12}}" class="time">{{selectMonthData.monthNum/12 + '年'}}</span>
-              <span wx:if="{{!selectMonthData.monthNum}}" class="time">连续包月</span>
-              <!--<span wx:if="{{selectMonthData.monthNum}}" class="price">￥<span class="strong">{{selectMonthData.totalUnitPrice}}</span>
-              <span">{{'(' + selectMonthData.unitPrice + '元/月)'}}</span>
-              </span>-->
-              <span wx:if="{{!selectMonthData.monthNum}}" class="price">{{'(' + selectMonthData.unitPrice + '元/次月)'}}</span>
+              <text wx:if="{{selectMonthData.monthNum && selectMonthData.monthNum < 13}}" class="time">{{selectMonthData.monthNum + '个月'}}</text>
+              <text wx:if="{{selectMonthData.monthNum && selectMonthData.monthNum > 12}}" class="time">{{selectMonthData.monthNum/12 + '年'}}</text>
+              <text wx:if="{{!selectMonthData.monthNum}}" class="time">连续包月</text>
+              <!--<text wx:if="{{selectMonthData.monthNum}}" class="price">￥<text class="strong">{{selectMonthData.totalUnitPrice}}</text>
+              <text">{{'(' + selectMonthData.unitPrice + '元/月)'}}</text>
+              </text>-->
+              <text wx:if="{{!selectMonthData.monthNum}}" class="price">{{'(' + selectMonthData.unitPrice + '元/次月)'}}</text>
             </navigator>
           </li>
         </ul>
@@ -96,26 +111,28 @@
 
       <!-- 使用优惠券 start -->
       <view class="section">
-        <p class="yhq" bindtap="checkLogin" bindtap="couponList.length > 0 && hasUsableCoupon && selectMonthData.hasusablecoupon && setValue('showCoupon', true)" bindtap="cnzzCollect('点击优惠券')">
-          <span class="yhq_title">使用优惠券：</span>
-          <span class="yhq_name" wx:if="{{couponList.length > 0 && hasUsableCoupon && selectMonthData.hasusablecoupon}}">
-					<span class="yhq_span">WPS会员专用券</span>
-          <span class="yhq_span">{{'满' + par_min_pay + '减' + par_price + '元'}}</span>
-          </span>
+        <text class="yhq" bindtap="checkLogin" bindtap="couponList.length > 0 && hasUsableCoupon && selectMonthData.hasusablecoupon && setValue('showCoupon', true)" bindtap="cnzzCollect('点击优惠券')">
+          <text class="yhq_title">使用优惠券：</text>
+          <text class="yhq_name" wx:if="{{couponList.length > 0 && hasUsableCoupon && selectMonthData.hasusablecoupon}}">
+            <text class="yhq_span">WPS会员专用券</text>
+            <text class="yhq_span">{{'满' + par_min_pay + '减' + par_price + '元'}}</text>
+          </text>
           <!-- 没有优惠券加入 yhq_name_gray -->
-          <span style="display: none" class="yhq_name_gray" wx:if="{{couponList.length == 0 || !hasUsableCoupon || !selectMonthData.hasusablecoupon}}">
-					<span class="yhq_span">暂无优惠券</span>
-          </span>
-        </p>
+          <text style="display: none" class="yhq_name_gray" wx:if="{{couponList.length == 0 || !hasUsableCoupon || !selectMonthData.hasusablecoupon}}">
+            <text class="yhq_span">暂无优惠券</text>
+          </text>
+        </text>
       </view>
       <!-- 使用优惠券 end -->
     </view>
     <!-- 前往支付 start -->
     <view class="foot">
       <view class="prize">
-        <span class="txt">共计支付：</span>
-        <span class="red">￥<span class="strong" ms-text="payPrice|number(1)"></span></span>
-        <span class="gray" ms-text="'（省' + saveMoney.toFixed(1) + '元）'"></span>
+        <text class="txt">共计支付：</text>
+        <text class="red">￥
+          <text class="strong" ms-text="payPrice|number(1)"></text>
+        </text>
+        <text class="gray" ms-text="'（省' + saveMoney.toFixed(1) + '元）'"></text>
       </view>
       <navigator href="javascript:void(0)" class="pay_btn" bindtap="isRepeatClick()">前往支付</navigator>
       <!-- 按钮置灰 pay_btn_gray -->
@@ -124,7 +141,7 @@
 
     <!-- 企业用户隐藏 前往支付 ，显示下面文案 start -->
     <view class="foot" wx:if="{{myLevel >= 100}}">
-      <p class="qiye">企业用户暂不支持升级会员</p>
+      <text class="qiye">企业用户暂不支持升级会员</text>
     </view>
     <!-- 企业用户隐藏 前往支付 ，显示下面文案 end -->
 
@@ -139,12 +156,12 @@
           <li wx-for="{{monthList}}" wx:for-item="el" bindtap="selectPack($index, el.monthNum ? el.totalUnitPrice : 0, true)" class="{{selectIndex === $index ? 'time_select' : ''}}" bindtap="setValue('selectIndex', $index)" bindtap="setValue('packPrice', el.monthNum ? el.totalUnitPrice : 0)"
             bindtap="setValue('selectIndex', $index)">
             <!-- 选中加入 time_select -->
-            <span class="time_span" wx:if="{{el.monthNum && el.monthNum < 13}}">{{el.monthNum + '个月'}}</span>
-            <span class="time_span" wx:if="{{el.monthNum && el.monthNum > 12}}" ms-text="el.monthNum/12 + '年'"></span>
-            <span class="time_span" wx:if="{{!el.monthNum}}">连续包月</span>
-            <span class="time_span" wx:if="{{el.monthNum}}">{{'￥' + el.totalUnitPrice}}</span>
-            <span class="time_span" wx:if="{{el.monthNum}}">{{'(' + el.unitPrice + '元/月)'}}</span>
-            <span class="time_span" wx:if="{{!el.monthNum}}">{{'(' + el.unitPrice + '元/次月)'}}</span>
+            <text class="time_span" wx:if="{{el.monthNum && el.monthNum < 13}}">{{el.monthNum + '个月'}}</text>
+            <text class="time_span" wx:if="{{el.monthNum && el.monthNum > 12}}" ms-text="el.monthNum/12 + '年'"></text>
+            <text class="time_span" wx:if="{{!el.monthNum}}">连续包月</text>
+            <text class="time_span" wx:if="{{el.monthNum}}">{{'￥' + el.totalUnitPrice}}</text>
+            <text class="time_span" wx:if="{{el.monthNum}}">{{'(' + el.unitPrice + '元/月)'}}</text>
+            <text class="time_span" wx:if="{{!el.monthNum}}">{{'(' + el.unitPrice + '元/次月)'}}</text>
           </li>
         </ul>
       </view>
@@ -158,13 +175,13 @@
         <div class="box_top">
           <navigator href="javascript:void(0)" class="return" bindtap="setValue('showCoupon', false)"></navigator>
           <text class="h3 box_title box_title_big">请选择优惠券</text>
-          <p class="gray">温馨提示：每次仅能使用一张</p>
+          <text class="gray">温馨提示：每次仅能使用一张</text>
         </div>
         <ul class="yhq_ul">
           <!-- li选中加入 yhq_select -->
           <li wx:for="{{couponList}}" wx:for-item="el" bindtap="selectCoupon($index, el.params.min_pay, el.params.price, el.sn)" class="{{couponSelectIndex === $index ? 'yhq_select' : ''}}">
-            <!--<span class="yhq_span" class="{{+el.params.min_pay > +packPrice ? 'gray' : ''}}">WPS会员专用券</span>
-				<span class="yhq_span" class="{{+el.params.min_pay > +packPrice ? 'gray' : ''}}">满{{el.params.min_pay}}减{{el.params.price}}元</span>-->
+            <!--<text class="yhq_span" class="{{+el.params.min_pay > +packPrice ? 'gray' : ''}}">WPS会员专用券</text>
+				<text class="yhq_span" class="{{+el.params.min_pay > +packPrice ? 'gray' : ''}}">满{{el.params.min_pay}}减{{el.params.price}}元</text>-->
           </li>
         </ul>
       </div>
@@ -173,7 +190,7 @@
     <!-- 选择优惠券弹出框 end -->
     <!-- 支付异常 start -->
     <div class="pop" wx:if="showNetError">
-      <p class="abnormal">网络异常，请重试</p>
+      <text class="abnormal">网络异常，请重试</text>
     </div>
     <!-- 支付异常 end -->
   </view>

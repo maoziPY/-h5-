@@ -251,7 +251,17 @@ app.datamodel = {
   "code": ""
 }
 
-var login = require('controllers/login.js')
+var login = require('controllers/login.js');
+
+//$.inArray替代
+function inArray(search, array) {
+  for (var i in array) {
+    if (array[i] == search) {
+      return 1;
+    }
+  }
+  return -1;
+}
 
 
 Page({
@@ -333,7 +343,12 @@ Page({
       12: false,
       20: false,
       40: false
-    }
+    },
+    imgUrls: [],
+    indicatorDots: true,
+    autoplay: false,
+    interval: 5000,
+    duration: 1000
   },
   //事件处理函数
   bindViewTap: function () {
@@ -343,13 +358,21 @@ Page({
   },
 
   _init: function () {
+    //更新数据
+    this.setData({
+      imgUrls: [
+        'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/wpscard.jpg?v=6-9-10-31',
+        'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/docercard.png?v=6-9-10-31',
+        'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/supercard.jpg?v=6-9-10-31'
+      ]
+    })
     this.data.isLogin = login.checkLogin();
 
     //_checkJump();
 
     if (this.data.isLogin) {
       // 查询用户所有的自动续费项目
-      //getContract();
+      // getContract();
 
       // 判断会员等级，显示对应图标
       //_checkLevel();
@@ -357,7 +380,7 @@ Page({
 
     if (!this.data.isLogin) {
       // 获取支付相关配置信息
-      //_getConfig();
+      this._getConfig();
     }
 
     if (this.data.isLogin) {
@@ -467,17 +490,23 @@ Page({
     if (mapId == this.data.cardSelected) {
       return;
     }
-    this.data.monthList = [];
-    this.data.monthList = this.data._dataMap[mapId];
+    // this.data.monthList = [];
+
+    // this.data.monthList = this.data._dataMap[mapId];
+
+    this.setData({
+      monthList: this.data._dataMap[mapId]
+    })
 
     // 连续包月判断
     if (this.data.contractMap[mapId] == true) {
-      avalon.each(this.data.monthList, function (i, j) {
-        if (j.monthNum == undefined) {
-          avalon.Array.removeAt(this.data.monthList, i)
+      var monthList = this.data.monthList;
+      for (var i = 0, len = monthList.length; i<len; i++) {
+        if (monthList[i].monthNum == undefined) {
+          monthList.splice(i);
           return false
         }
-      });
+      }
     }
 
     this.data.cardSelected = mapId;
@@ -498,7 +527,11 @@ Page({
    * @return {[type]}           [description]
    */
   selectPack: function (index, packPrice, fromDuration) {
-    var data = $.extend(true, {}, this.data.monthList.$model[index]);
+    // var data = $.extend(true, {}, this.data.monthList.$model[index]);
+
+    var TempList = [].concat(this.data.monthList);
+    var data = TempList[index];
+
     this.data.selectMonthData = data;
 
     if (fromDuration && fromDuration === true) {
@@ -634,14 +667,19 @@ Page({
 
   // 开通月份数据组装
   _struData: function () {
-    avalon.each(this.data._configData.type, function (i, n) {
-      avalon.each(n.time, function (j, k) {
+    var type = this.data._configData.type,
+              n,k;
+
+    for (var i=0,tlen=type.length; i<tlen; i++) {
+      n = type[i];
+      for(var j=0,jlen=type[i].time.length; j<jlen; j++) {
         var data = {};
+        k = n.time[j];
         if (k == 'contract' || k == 'random') {
           data = {
             unitPrice: (n.discount[k].total_fee).toFixed(1), //次月折扣价
             originPrice: (n.discount[k].cost_fee).toFixed(1), //首月原价
-            hasusablecoupon: $.inArray(k, [].concat(n.enable_coupon)) != -1
+            hasusablecoupon: inArray(k, [].concat(n.enable_coupon)) != -1
           };
         } else {
           data = {
@@ -649,16 +687,17 @@ Page({
             unitPrice: (n.discount[k].total_fee / k).toFixed(1), //每月折扣价
             totalUnitPrice: n.discount[k].total_fee.toFixed(1), //总折扣价
             totalPrice: n.discount[k].cost_fee.toFixed(1), //总原价
-            hasusablecoupon: $.inArray(k, [].concat(n.enable_coupon)) != -1
+            hasusablecoupon: inArray(k, [].concat(n.enable_coupon)) != -1
           };
         }
 
         this.data._dataMap[n.id].push(data);
-      });
-    });
+      }
+    }
 
     // 初始化轮播插件，并指定显示某一会员卡片
-    this._swiper(this.data._configData.defaultconfig.id);
+    //this._swiper(this.data._configData.defaultconfig.id);
+    this.selectCard(20);
   },
 
   /**

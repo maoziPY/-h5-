@@ -1,26 +1,16 @@
-//index.js
-//获取应用实例
-var app = getApp()
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {}
+    imgUrls: [
+      'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/wpscard.jpg?v=6-9-10-31',
+      'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/docercard.png?v=6-9-10-31',
+      'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/supercard.jpg?v=6-9-10-31'
+    ],
+    indicatorDots: true,
+    autoplay: false,
+    interval: 5000,
+    duration: 1000
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    console.log('onLoad')
-    var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })
+  test: function() {
+    console.log(2111);
   }
 })
