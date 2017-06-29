@@ -67,14 +67,15 @@
       <view class="section">
         <view class="mouth_top">
           <text class="h3 mouth_title">开通月份</text>
-          <navigator href="javascript:void(0);" wx:if="{{monthList.length > 3}}" bindtap="setValue('showDuration', true)" bindtap="cnzzCollect('点击其他月份')" class="mouth_more">其它月份
+          <!--<navigator href="javascript:void(0);" wx:if="{{monthList.length > 3}}" bindtap="setValue('showDuration', true)" bindtap="cnzzCollect('点击其他月份')" class="mouth_more">其它月份-->
+           <navigator href="javascript:void(0);" wx:if="{{monthList.length > 3}}" data-show-duration="{{true}}" bindtap="setValue" class="mouth_more">其它月份
             <text class="arrow_right"></text>
           </navigator>
         </view>
         <!-- 默认显示、选中下面月份 -->
         <ul class="mouth_change clearfix" wx:if="{{showMonthEsta}}">
           <!--<li wx:for="{{monthList}}" wx:for-item="el" wx:if="{{index < 3}}" bindtap="selectPack(index, el.monthNum ? el.totalUnitPrice : 0)" bindtap="cnzzCollect('切换月份')">-->
-           <li wx:for="{{monthList}}" wx:for-item="el" wx:if="{{index < 3}}" data-index="{{index}}" data-packPrice="{{el.monthNum ? el.totalUnitPrice : 0}}" bindtap="selectPack">
+           <li wx:for="{{monthList}}" wx:for-item="el" wx:if="{{index < 3}}" data-index="{{index}}" data-pack-price="{{el.monthNum ? el.totalUnitPrice : 0}}" bindtap="selectPack">
             <navigator href="javascript:void(0)" class="mouth_list {{selectIndex === index ? 'mouth_list_default' : ''}}" >
               <!-- 选中 mouth_list_default -->
               <text class="time" wx:if="{{el.monthNum && el.monthNum < 13}}">{{el.monthNum + '个月'}}</text>
@@ -95,9 +96,9 @@
               <text wx:if="{{selectMonthData.monthNum && selectMonthData.monthNum < 13}}" class="time">{{selectMonthData.monthNum + '个月'}}</text>
               <text wx:if="{{selectMonthData.monthNum && selectMonthData.monthNum > 12}}" class="time">{{selectMonthData.monthNum/12 + '年'}}</text>
               <text wx:if="{{!selectMonthData.monthNum}}" class="time">连续包月</text>
-              <!--<text wx:if="{{selectMonthData.monthNum}}" class="price">￥<text class="strong">{{selectMonthData.totalUnitPrice}}</text>
-              <text">{{'(' + selectMonthData.unitPrice + '元/月)'}}</text>
-              </text>-->
+              <text wx:if="{{selectMonthData.monthNum}}" class="price">￥<text class="strong">{{selectMonthData.totalUnitPrice}}</text>
+              <text>{{'(' + selectMonthData.unitPrice + '元/月)'}}</text>
+              </text>
               <text wx:if="{{!selectMonthData.monthNum}}" class="price">{{'(' + selectMonthData.unitPrice + '元/次月)'}}</text>
             </navigator>
           </li>
@@ -142,18 +143,19 @@
     <!-- 企业用户隐藏 前往支付 ，显示下面文案 end -->
 
     <!-- 选择时长弹出框 start -->
-    <view class="pop" wx:if="{{showDuration}}">
+    <view class="pop" wx:if="{{showDuration}}" style="display: block">
       <view class="box">
         <view class="box_top">
-          <navigator href="javascript:void(0)" class="return" bindtap="setValue('showDuration', false)"></navigator>
+          <navigator href="javascript:void(0)" class="return" data-show-duration="{{false}}" bindtap="setValue"></navigator>
           <text class="h3 box_title">请选择开通时长</text>
         </view>
         <ul class="time_ul">
-          <li wx-for="{{monthList}}" wx:for-item="el" bindtap="selectPack($index, el.monthNum ? el.totalUnitPrice : 0, true)" class="{{selectIndex === $index ? 'time_select' : ''}}" bindtap="setValue('selectIndex', $index)" bindtap="setValue('packPrice', el.monthNum ? el.totalUnitPrice : 0)"
-            bindtap="setValue('selectIndex', $index)">
+          <!--<li wx:for="{{monthList}}" wx:for-item="el" bindtap="selectPack($index, el.monthNum ? el.totalUnitPrice : 0, true)" class="{{selectIndex === index ? 'time_select' : ''}}" bindtap="setValue('selectIndex', $index)" bindtap="setValue('packPrice', el.monthNum ? el.totalUnitPrice : 0)"
+            bindtap="setValue('selectIndex', $index)">-->
+            <li wx:for="{{monthList}}" wx:for-item="el" data-index="{{index}}" data-pack-price="{{el.monthNum ? el.totalUnitPrice : 0}}" data-from-duration="{{true}}" bindtap="selectPack" class="{{selectIndex === index ? 'time_select' : ''}}">
             <!-- 选中加入 time_select -->
             <text class="time_span" wx:if="{{el.monthNum && el.monthNum < 13}}">{{el.monthNum + '个月'}}</text>
-            <text class="time_span" wx:if="{{el.monthNum && el.monthNum > 12}}" ms-text="el.monthNum/12 + '年'"></text>
+            <text class="time_span" wx:if="{{el.monthNum && el.monthNum > 12}}">{{el.monthNum/12 + '年'}}</text>
             <text class="time_span" wx:if="{{!el.monthNum}}">连续包月</text>
             <text class="time_span" wx:if="{{el.monthNum}}">{{'￥' + el.totalUnitPrice}}</text>
             <text class="time_span" wx:if="{{el.monthNum}}">{{'(' + el.unitPrice + '元/月)'}}</text>

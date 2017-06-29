@@ -559,7 +559,8 @@ navigator.mouth_more:active {
 .mouth_change li.mouth_select {
     width: 50%;
     float: none;
-    margin: 0 auto
+    margin: 0 auto;
+    display: block;
 }
 
 navigator.mouth_list,
@@ -705,12 +706,19 @@ navigator.return:visited {
     background-position: 5px -45px
 }
 
+.time_ul {
+  overflow: hidden;
+  display: block;
+}
+
 .time_ul li {
     height: 46px;
     line-height: 46px;
     border-bottom: 1px solid #e9e9e9;
     text-align: center;
-    padding-left: 37px
+    padding-left: 37px;
+    float:left;
+    width:100%;
 }
 
 .yhq_ul {

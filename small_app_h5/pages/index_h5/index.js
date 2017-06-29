@@ -520,9 +520,11 @@ Page({
     // 默认选中第一个
     this.selectPack();
 
-    this.data.showDuration = false;
-    this.data.showMonthEstaSelect = false;
-    this.data.selectIndex = 0;
+    this.setData({
+      showDuration: false,
+      showMonthEstaSelect: false,
+      selectIndex: 0
+    })
   },
 
   /**
@@ -540,6 +542,12 @@ Page({
         packPrice = dataset.packPrice,
         fromDuration = dataset.fromDuration;
       this.cnzzCollect('切换月份');
+
+      if (dataset.fromDuration) {
+        this.data.showMonthEsta = false;
+        this.data.showMonthEstaSelect = true;
+        this.data.showDuration = false;
+      }
     }
     
 
@@ -549,12 +557,6 @@ Page({
     var data = TempList[index];
 
     this.data.selectMonthData = data;
-
-    if (fromDuration && fromDuration === true) {
-      this.data.showMonthEsta = false;
-      this.data.showMonthEstaSelect = true;
-      this.data.showDuration = false;
-    }
 
     this.data.selectIndex = index;
 
@@ -646,8 +648,13 @@ Page({
    * @param {[String]} key [键名]
    * @param {[String]} val [键值]
    */
-  setValue: function (key, val) {
-    this.data[key] = val
+  setValue: function (event) {
+    var dataset = event.currentTarget.dataset;
+      this.setData(dataset)
+
+      if (dataset.showDuration) {
+        this.cnzzCollect('点击其他月份')
+      }
   },
 
   // 获取支付相关配置信息
@@ -776,8 +783,8 @@ Page({
    * @param  {[String]} action [动作]
    */
   cnzzCollect: function (action) {
-    return;
-    collect.pushCNZZ('H5支付', action);
+    console.log('cnzz');
+    // collect.pushCNZZ('H5支付', action);
   },
 
   //gotoPay 前去支付]
