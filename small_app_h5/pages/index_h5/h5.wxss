@@ -598,11 +598,11 @@ navigator.mouth_list_select:active {
     font-size: 1.2em
 }
 
-.mouth_list .price span.txt {
+.mouth_list .price text.txt {
     font-size: 12px
 }
 
-.mouth_list .price span.strong {
+.mouth_list .price text.strong {
     font-size: 1.2em
 }
 

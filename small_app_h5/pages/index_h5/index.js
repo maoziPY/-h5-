@@ -344,28 +344,20 @@ Page({
       20: false,
       40: false
     },
-    imgUrls: [],
+    imgUrls: [
+      'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/wpscard.jpg?v=6-9-10-31',
+      'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/docercard.png?v=6-9-10-31',
+      'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/supercard.jpg?v=6-9-10-31'
+    ],
     indicatorDots: true,
     autoplay: false,
+    indicatorColor: '#e6e6e6',
+    indicatorActive: '#FF0000',
     interval: 5000,
     duration: 1000
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
 
   _init: function () {
-    //更新数据
-    this.setData({
-      imgUrls: [
-        'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/wpscard.jpg?v=6-9-10-31',
-        'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/docercard.png?v=6-9-10-31',
-        'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/supercard.jpg?v=6-9-10-31'
-      ]
-    })
     this.data.isLogin = login.checkLogin();
 
     //_checkJump();
@@ -494,14 +486,11 @@ Page({
 
     // this.data.monthList = this.data._dataMap[mapId];
 
-    this.setData({
-      monthList: this.data._dataMap[mapId]
-    })
+    var monthList = this.data._dataMap[mapId];
 
     // 连续包月判断
     if (this.data.contractMap[mapId] == true) {
-      var monthList = this.data.monthList;
-      for (var i = 0, len = monthList.length; i<len; i++) {
+      for (var i = 0, len = monthList.length; i < len; i++) {
         if (monthList[i].monthNum == undefined) {
           monthList.splice(i);
           return false
@@ -509,10 +498,14 @@ Page({
       }
     }
 
+    this.setData({
+      monthList: monthList
+    })
+
     this.data.cardSelected = mapId;
 
     // 默认选中第一个
-    this.selectPack(0);
+    this.selectPack();
 
     this.data.showDuration = false;
     this.data.showMonthEstaSelect = false;
@@ -526,7 +519,16 @@ Page({
    * @param  {[Boolean]} fromDuration [是否从开通时长进来的，默认为否]
    * @return {[type]}           [description]
    */
-  selectPack: function (index, packPrice, fromDuration) {
+  selectPack: function (event) {
+    var index = 0;
+    if (event) {
+      var dataset = event.currentTarget.dataset,
+        index = dataset.index || 0,
+        packPrice = dataset.packPrice,
+        fromDuration = dataset.fromDuration;
+    }
+    
+
     // var data = $.extend(true, {}, this.data.monthList.$model[index]);
 
     var TempList = [].concat(this.data.monthList);
@@ -566,6 +568,16 @@ Page({
     } else {
       this._couculatePay();
     }
+
+    this.setData({
+      selectMonthData: this.data.selectMonthData,
+      showMonthEsta: this.data.showMonthEsta,
+      showMonthEstaSelect: this.data.showMonthEstaSelect,
+      showDuration: this.data.showDuration,
+      selectIndex: this.data.selectIndex,
+      couponSelectIndex: this.data.couponSelectIndex,
+      packPrice: this.data.packPrice,
+    })
   },
 
   /**
@@ -608,6 +620,11 @@ Page({
       this.data.saveMoney = this.data.saveMoney + +this.data.par_price;
     }
 
+    this.setData({
+      payPrice: (+this.data.payPrice).toFixed(1),
+      saveMoney: this.data.saveMoney.toFixed(1)
+    })
+
   },
 
   /**
@@ -628,16 +645,29 @@ Page({
   },
 
   // 获取支付优惠券列表的
-  // _getCouponList: function () {
-  //   var data = {
-  //     price: +this.data.packPrice
-  //   },
-  //     dataServices.get('vip').couponList({ data: data }).done(function (resp) {
-  //       if (resp.result == 'ok') {
-  //         this._couponDereplication(resp.data.data);
-  //       }
-  //     });
-  // },
+  _getCouponList: function () {
+    var resp = {
+      "result": "ok",
+      "data": {
+        "data": [],
+        "total": 0
+      },
+      "msg": "获取优惠券列表成功"
+    }
+
+    if (resp.result == 'ok') {
+          this._couponDereplication(resp.data.data);
+    }
+
+    // var data = {
+    //   price: +this.data.packPrice
+    // },
+    //   dataServices.get('vip').couponList({ data: data }).done(function (resp) {
+    //     if (resp.result == 'ok') {
+    //       this._couponDereplication(resp.data.data);
+    //     }
+    //   });
+  },
 
   /**
    * [_couponDereplication 优惠券列表数据去重]
@@ -647,20 +677,28 @@ Page({
     var arr = [];
     this.data.couponList = [];
     this.data.hasUsableCoupon = false;
-    avalon.each(dataArray, function (i, v) {
-      if ($.inArray(v.name, arr) == -1) {
+    for(var i=0,len=dataArray; i<len; i++) {
+      var v = dataArray[i];
+      if (inArray(v.name, arr) == -1) {
         if (!this.data.hasUsableCoupon && +v.params.min_pay < +this.data.packPrice) {
           this.data.hasUsableCoupon = true;
         }
         arr.push(v.name);
         this.data.couponList.push(v);
       }
-    });
+    }
 
     if (this.data.hasUsableCoupon) {
       this.data.par_min_pay = +this.data.couponList[0].params.min_pay;
       this.data.par_price = +this.data.couponList[0].params.price;
     }
+
+    this.setData({
+      hasUsableCoupon: this.data.hasUsableCoupon,
+      par_min_pay: this.data.par_min_pay,
+      par_price: this.data.par_price,
+      couponList: this.data.couponList
+    })
 
     this._couculatePay();
   },
@@ -668,11 +706,11 @@ Page({
   // 开通月份数据组装
   _struData: function () {
     var type = this.data._configData.type,
-              n,k;
+      n, k;
 
-    for (var i=0,tlen=type.length; i<tlen; i++) {
+    for (var i = 0, tlen = type.length; i < tlen; i++) {
       n = type[i];
-      for(var j=0,jlen=type[i].time.length; j<jlen; j++) {
+      for (var j = 0, jlen = type[i].time.length; j < jlen; j++) {
         var data = {};
         k = n.time[j];
         if (k == 'contract' || k == 'random') {
@@ -697,7 +735,7 @@ Page({
 
     // 初始化轮播插件，并指定显示某一会员卡片
     //this._swiper(this.data._configData.defaultconfig.id);
-    this.selectCard(20);
+    this.selectCard(this.data._configData.defaultconfig.id);
   },
 
   /**

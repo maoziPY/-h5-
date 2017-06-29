@@ -54,18 +54,13 @@
           <li class="{{activeIndex == 1 && 'active'}}"></li>
           <li class="{{activeIndex == 2 && 'active'}}"></li>
         </ul>-->
-        <swiper style="height:210px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="test">
+        <swiper style="height:210px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}"  indicator-active-color="{{indicatorActive}}" interval="{{interval}}" duration="{{duration}}" bindchange="test">
           <block wx:for="{{imgUrls}}">
             <swiper-item>
-              <image src="{{item}}" class="slide-image card_list_main card{{index+1}}" style="margin-left: 15px;"/>
+              <image src="{{item}}" class="slide-image card_list_main card{{index+1}}" style="margin-left: 35px;"/>
             </swiper-item>
           </block>
         </swiper>
-        <ul class="vip_dot">
-          <li class="{{activeIndex == 0 && 'active'}}"></li>
-          <li class="{{activeIndex == 1 && 'active'}}"></li>
-          <li class="{{activeIndex == 2 && 'active'}}"></li>
-        </ul>
       </view>
 
       <!-- 开通月份 start -->
@@ -78,15 +73,16 @@
         </view>
         <!-- 默认显示、选中下面月份 -->
         <ul class="mouth_change clearfix" wx:if="{{showMonthEsta}}">
-          <li wx:for="{{monthList}}" wx:for-item="el" wx:if="{{index < 3}}" bindtap="selectPack(index, el.monthNum ? el.totalUnitPrice : 0)" bindtap="cnzzCollect('切换月份')">
-            <navigator href="javascript:void(0)" class="mouth_list {{selectIndex === index ? 'mouth_list_default' : ''}}">
+          <!--<li wx:for="{{monthList}}" wx:for-item="el" wx:if="{{index < 3}}" bindtap="selectPack(index, el.monthNum ? el.totalUnitPrice : 0)" bindtap="cnzzCollect('切换月份')">-->
+           <li wx:for="{{monthList}}" wx:for-item="el" wx:if="{{index < 3}}" data-index="{{index}}" data-packPrice="{{el.monthNum ? el.totalUnitPrice : 0}}" bindtap="selectPack">
+            <navigator href="javascript:void(0)" class="mouth_list {{selectIndex === index ? 'mouth_list_default' : ''}}" >
               <!-- 选中 mouth_list_default -->
               <text class="time" wx:if="{{el.monthNum && el.monthNum < 13}}">{{el.monthNum + '个月'}}</text>
               <text class="time" wx:if="{{el.monthNum && el.monthNum > 12}}">{{el.monthNum/12 + '年'}}</text>
               <text class="time" wx:if="{{!el.monthNum}}">连续包月</text>
-              <text class="price" wx:if="{{el.monthNum}}">￥
-                <text class="strong">{{el.totalUnitPrice}}</text>
-                <view class="txt">{{'(' + el.unitPrice + '元/月)'}}</view>
+              <text class="price" wx:if="{{el.monthNum}}">
+                <text class="strong">￥{{el.totalUnitPrice}}\n</text>
+                <text class="txt">{{'(' + el.unitPrice + '元/月)'}}</text>
               </text>
               <text class="price" wx:if="{{!el.monthNum}}">{{'(' + el.unitPrice + '元/次月)'}}</text>
             </navigator>
@@ -118,7 +114,7 @@
             <text class="yhq_span">{{'满' + par_min_pay + '减' + par_price + '元'}}</text>
           </text>
           <!-- 没有优惠券加入 yhq_name_gray -->
-          <text style="display: none" class="yhq_name_gray" wx:if="{{couponList.length == 0 || !hasUsableCoupon || !selectMonthData.hasusablecoupon}}">
+          <text class="yhq_name_gray" wx:if="{{couponList.length == 0 || !hasUsableCoupon || !selectMonthData.hasusablecoupon}}">
             <text class="yhq_span">暂无优惠券</text>
           </text>
         </text>
@@ -129,10 +125,10 @@
     <view class="foot">
       <view class="prize">
         <text class="txt">共计支付：</text>
-        <text class="red">￥
-          <text class="strong" ms-text="payPrice|number(1)"></text>
+        <text class="red">
+          <text class="strong">￥{{payPrice}}</text>
         </text>
-        <text class="gray" ms-text="'（省' + saveMoney.toFixed(1) + '元）'"></text>
+        <text class="gray">{{'（省' + saveMoney + '元）'}}</text>
       </view>
       <navigator href="javascript:void(0)" class="pay_btn" bindtap="isRepeatClick()">前往支付</navigator>
       <!-- 按钮置灰 pay_btn_gray -->
