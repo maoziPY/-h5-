@@ -54,7 +54,7 @@
           <li class="{{activeIndex == 1 && 'active'}}"></li>
           <li class="{{activeIndex == 2 && 'active'}}"></li>
         </ul>-->
-        <swiper style="height:210px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}"  indicator-active-color="{{indicatorActive}}" interval="{{interval}}" duration="{{duration}}" bindchange="test">
+        <swiper style="height:210px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}"  indicator-active-color="{{indicatorActive}}" interval="{{interval}}" duration="{{duration}}" bindchange="slideChange">
           <block wx:for="{{imgUrls}}">
             <swiper-item>
               <image src="{{item}}" class="slide-image card_list_main card{{index+1}}" style="margin-left: 35px;"/>

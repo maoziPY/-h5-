@@ -344,16 +344,29 @@ Page({
       20: false,
       40: false
     },
+    // 卡片下标与会员id的映射
+    map: {
+      0: 20,
+      1: 12,
+      2: 40,
+      20: 0,
+      12: 1,
+      40: 2
+    },
+    // 卡片url
     imgUrls: [
       'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/wpscard.jpg?v=6-9-10-31',
       'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/docercard.png?v=6-9-10-31',
       'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/supercard.jpg?v=6-9-10-31'
     ],
+    // 是否显示面板指示点
     indicatorDots: true,
     autoplay: false,
+    // 指示点颜色
     indicatorColor: '#e6e6e6',
+    // 当前选中的指示点颜色
     indicatorActive: '#FF0000',
-    interval: 5000,
+    // 滑动动画时长
     duration: 1000
   },
 
@@ -526,6 +539,7 @@ Page({
         index = dataset.index || 0,
         packPrice = dataset.packPrice,
         fromDuration = dataset.fromDuration;
+      this.cnzzCollect('切换月份');
     }
     
 
@@ -633,7 +647,7 @@ Page({
    * @param {[String]} val [键值]
    */
   setValue: function (key, val) {
-    model[key] = val
+    this.data[key] = val
   },
 
   // 获取支付相关配置信息
@@ -762,7 +776,7 @@ Page({
    * @param  {[String]} action [动作]
    */
   cnzzCollect: function (action) {
-    console.log('coolect');
+    return;
     collect.pushCNZZ('H5支付', action);
   },
 
@@ -935,12 +949,31 @@ Page({
       initialSlide: levelId ? map[levelId] : 0,
       onSlideChangeEnd: function (swiper) {
         // 切换会员收集
-        this.data.cnzzCollect('切换会员类型');
-        this.data.selectCard(map[swiper.activeIndex]);
+        this.cnzzCollect('切换会员类型');
+        this.selectCard(map[swiper.activeIndex]);
         this.data.activeIndex = swiper.activeIndex;
         this.data.showMonthEsta = true;
       }
     });
+  },
+
+  slideChange: function (event) {
+    var map = {
+      0: 20,
+      1: 12,
+      2: 40,
+      20: 0,
+      12: 1,
+      40: 2
+    };
+    // 切换会员收集
+    this.cnzzCollect('切换会员类型');
+    this.selectCard(map[event.detail.current]);
+
+    this.setData({
+      activeIndex: event.detail.current,
+      showMonthEsta: true
+    })
   },
 
   //点击缓冲
