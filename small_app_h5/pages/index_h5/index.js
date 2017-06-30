@@ -359,8 +359,6 @@ Page({
       'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/docercard.png?v=6-9-10-31',
       'http://s3.vas.wpscdn.cn/vip/styles/wappay/img/supercard.jpg?v=6-9-10-31'
     ],
-    // 是否显示面板指示点
-    indicatorDots: true,
     autoplay: false,
     // 指示点颜色
     indicatorColor: '#e6e6e6',
@@ -766,7 +764,6 @@ Page({
    * @param  {[Boolean]} isSelf [是否_self方式打开]
    */
   openLink: function (url, delay, isSelf) {
-    console.log('openlink');
     if (delay && delay === true) {
       setTimeout(function () {
         if (isSelf && isSelf === true) {
@@ -783,7 +780,6 @@ Page({
    * @param  {[String]} action [动作]
    */
   cnzzCollect: function (action) {
-    console.log('cnzz');
     // collect.pushCNZZ('H5支付', action);
   },
 
@@ -1014,7 +1010,29 @@ Page({
   },
 
   onLoad: function () {
-    console.log('onLoad')
+
+    // wx.login({
+    //   success: function (res) {
+    //     console.log(res);
+    //     if (res.code) {
+    //       //发起网络请求
+    //       wx.request({
+    //         url: 'https://api.weixin.qq.com/sns/jscode2session',
+    //         data: {
+    //           appid: 'wxc0cc24753a8b47d4',
+    //           secret: '81dbb638bfd45c549bfc1dc80127a6c9',
+    //           js_code: res.code,
+    //           grant_type: 'authorization_code'
+    //         },
+    //         success: function (res) {
+    //           console.log(res.data)
+    //         }
+    //       })
+    //     } else {
+    //       console.log('获取用户登录态失败！' + res.errMsg)
+    //     }
+    //   }
+    // });
 
     //初始化
     this._init()

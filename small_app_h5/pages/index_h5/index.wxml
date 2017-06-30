@@ -54,13 +54,18 @@
           <li class="{{activeIndex == 1 && 'active'}}"></li>
           <li class="{{activeIndex == 2 && 'active'}}"></li>
         </ul>-->
-        <swiper style="height:210px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}"  indicator-active-color="{{indicatorActive}}" interval="{{interval}}" duration="{{duration}}" bindchange="slideChange">
+        <swiper style="height:210px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}"  indicator-active-color="{{indicatorActive}}" interval="{{interval}}" duration="{{duration}}" bindchange="slideChange" current="{{activeIndex}}">
           <block wx:for="{{imgUrls}}">
             <swiper-item>
               <image src="{{item}}" class="slide-image card_list_main card{{index+1}}" style="margin-left: 35px;"/>
             </swiper-item>
           </block>
         </swiper>
+        <ul class="vip_dot">
+          <li class="{{activeIndex == 0 && 'active'}}" data-active-index="{{0}}" bindtap="setValue"></li>
+          <li class="{{activeIndex == 1 && 'active'}}" data-active-index="{{1}}" bindtap="setValue"></li>
+          <li class="{{activeIndex == 2 && 'active'}}" data-active-index="{{2}}" bindtap="setValue"></li>
+        </ul>
       </view>
 
       <!-- 开通月份 start -->
