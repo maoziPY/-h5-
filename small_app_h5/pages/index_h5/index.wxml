@@ -14,46 +14,18 @@
           <image src="{{userinfo.pic}}" alt="" class="user_img"></image>
           <view class="user_txt">
             <view class="userinfo_name">{{userinfo.nickname}}</view>
-            <text class="user_logo logo_svip" class="{{!isL40 && 'logo_svip_gray'}}"></text>
+            <text class="user_logo logo_svip {{!isL40 && 'logo_svip_gray'}}"></text>
             <!-- 超级 点亮 logo_svip， 置灰 logo_svip_gray -->
-            <text class="user_logo logo_dvip" class="{{!isL12 && 'logo_dvip_gray'}}"></text>
+            <text class="user_logo logo_dvip {{!isL12 && 'logo_dvip_gray'}}"></text>
             <!-- 稻壳 点亮 logo_dvip， 置灰 logo_dvip_gray -->
-            <text class="user_logo logo_wvip" class="{{!isL20 && 'logo_wvip_gray'}}"></text>
+            <text class="user_logo logo_wvip {{!isL20 && 'logo_wvip_gray'}}"></text>
             <!-- wps 点亮 logo_wvip， 置灰 logo_wvip_gray -->
             <view class="cb"></view>
-            <text class="user_time" wx:if="{{expire_time}}">有效期：{{expire_time | date("yyyy-MM-dd")}}</text>
+            <text class="user_time" wx:if="{{expire_time}}">有效期：{{expire_time}}</text>
+            <!--<text class="user_time" wx:if="{{expire_time}}">有效期：{{expire_time | date("yyyy-MM-dd")}}</text>-->
           </view>
           <navigator href="javascript:void(0)" bindtap="loginOut" class="user_btn">注销账号</navigator>
         </view>
-        <!-- 登录后 end -->
-        <!--<ul class="vip_card swiper-wrapper">-->
-        <!-- wps会员 -->
-        <!--<li class="swiper-slide card_list">
-            <view class="card_list_main card1">
-              <navigator href="javascript:void(0)" class="card_more" bindtap="cnzzCollect('查看全部特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-wps.html?source=android_vip_open', true, true)">查看16项更多特权 >></navigator>
-            </view>
-          </li>-->
-        <!-- 稻壳会员 -->
-        <!--<li class="swiper-slide card_list">
-            <view class="card_list_main card2">
-              <navigator href="javascript:void(0)" class="card_more" bindtap="cnzzCollect('查看全部特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-docer.html?source=android_vip_open', true, true)">查看10项更多特权 >></navigator>
-            </view>
-          </li>-->
-        <!-- 超级会员 -->
-        <!--<li class="swiper-slide card_list">
-            <view class="card_list_main card3">
-              <text class="card_more">点击图标可查看特权</text>
-              <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-wps.html?source=android_vip_open', true, true)" class="card_logo" title="WPS会员"></navigator>
-              <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-docer.html?source=android_vip_open', true, true)" class="card_logo" title="稻壳会员"></navigator>
-              <navigator href="javascript:void(0)" bindtap="cnzzCollect('点击特权')" bindtap="openLink('https://android.wps.cn/epersonal/user-privilege-v2/intro-super.html?source=android_vip_open', true, true)" class="card_logo" title="专属会员"></navigator>
-            </view>
-          </li>
-        </ul>
-        <ul class="vip_dot">
-          <li class="{{activeIndex == 0 && 'active'}}"></li>
-          <li class="{{activeIndex == 1 && 'active'}}"></li>
-          <li class="{{activeIndex == 2 && 'active'}}"></li>
-        </ul>-->
         <swiper style="height:210px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}"  indicator-active-color="{{indicatorActive}}" interval="{{interval}}" duration="{{duration}}" bindchange="slideChange" current="{{activeIndex}}">
           <block wx:for="{{imgUrls}}">
             <swiper-item>

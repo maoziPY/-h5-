@@ -3,7 +3,82 @@
 var app = getApp()
 app.datamodel = {
   "openid": "",
-  "userinfo": "",
+  "userinfo": {
+    "account": "",
+    "address": "",
+    "city": "",
+    "companyid": 0,
+    "country": "",
+    "departmentid": "",
+    "email": "",
+    "firstname": "",
+    "lastname": "",
+    "loginmode": "qq:",
+    "nickname": "帽子",
+    "phonenumber": "",
+    "pic": "http://q.qlogo.cn/qqapp/100360965/8A72A2646310016A5D0CD66BC2CD1235/100",
+    "postal": "",
+    "province": "",
+    "regtime": 1491640270,
+    "role": [
+      "user"
+    ],
+    "sex": "male",
+    "status": "active",
+    "userid": 238776441,
+    "exp": 13854,
+    "level": 19,
+    "privilege": [
+      {
+        "spid": "data_recover",
+        "times": 0,
+        "expire_time": 1526091338
+      },
+      {
+        "spid": "ocr",
+        "times": 0,
+        "expire_time": 1526091338
+      },
+      {
+        "spid": "pdf2doc",
+        "times": 0,
+        "expire_time": 1526091338
+      },
+      {
+        "spid": "pdf_merge",
+        "times": 0,
+        "expire_time": 1526091338
+      },
+      {
+        "spid": "pdf_split",
+        "times": 0,
+        "expire_time": 1526091338
+      }
+    ],
+    "total_buy": 0,
+    "total_cost": -8211,
+    "vip": {
+      "name": "WPS会员",
+      "has_ad": 0,
+      "memberid": 20,
+      "expire_time": false,
+      "enabled": [
+        {
+          "memberid": 20,
+          "name": "白银会员",
+          "expire_time": 1527128138
+        },
+        {
+          "memberid": 12,
+          "name": "稻壳会员",
+          "expire_time": 1505037425
+        }
+      ]
+    },
+    "wealth": 30443,
+    "mb_discount": 0.85,
+    "companyname": ""
+  },
   "uniform_pay_config": {
     "defaultconfig": {
       "advert": "超级会员限时3折",
@@ -251,6 +326,8 @@ app.datamodel = {
   "code": ""
 }
 
+app.sid = 'afb6698db2231630893b75e558d7f0ca09694d33000e3b7079';
+
 var login = require('controllers/login.js');
 
 //$.inArray替代
@@ -337,7 +414,7 @@ Page({
     // 稻壳会员
     isL12: false,
     // 有效期
-    expire_time: app.datamodel.userinfo ? app.datamodel.userinfo.vip.expire_time * 1000 : '',
+    expire_time: false,
     // 连续包月
     contractMap: {
       12: false,
@@ -369,16 +446,18 @@ Page({
   },
 
   _init: function () {
-    this.data.isLogin = login.checkLogin();
+    this.setData({
+      isLogin: login.checkLogin()
+    })
 
     //_checkJump();
 
     if (this.data.isLogin) {
       // 查询用户所有的自动续费项目
-      // getContract();
+      this.getContract();
 
       // 判断会员等级，显示对应图标
-      //_checkLevel();
+      this._checkLevel();
     }
 
     if (!this.data.isLogin) {
@@ -388,7 +467,7 @@ Page({
 
     if (this.data.isLogin) {
       // 获取用户信息
-      //_getUserInfo();
+      //this._getUserInfo();
     }
 
     // 页面展示量收集
@@ -431,21 +510,33 @@ Page({
 
   // 判断会员等级，显示对应图标
   _checkLevel: function () {
-    var enabled = this.data.userinfo.vip.enabled;
-    if (enabled.length == 0) {
-      this.data.expire_time = false;
+    var enabled = this.data.userinfo.vip.enabled,
+        expire_time = app.datamodel.userinfo.vip.expire_time;
+    if (enabled.length != 0 && expire_time) {
+      var unixTimestamp = new Date(expire_time * 1000);
+      var commonTime = unixTimestamp.toLocaleString();
+      this.setData({
+        expire_time: commonTime
+      }) 
     }
-    avalon.each(enabled, function (i, j) {
-      if (j.memberid == 40) {
-        this.data.isL40 = true;
+    
+    for(var i=0,len=enabled.length; i<len; i++) {
+      if (enabled[i].memberid == 40) {
+        this.setData({
+          isL40: true
+        })
       }
-      else if (j.memberid == 20) {
-        this.data.isL20 = true;
+      else if (enabled[i].memberid == 20) {
+        this.setData({
+          isL20: true
+        })
       }
-      else if (j.memberid == 12) {
-        this.data.isL12 = true;
+      else if (enabled[i].memberid == 12) {
+        this.setData({
+          isL12: true
+        })
       }
-    })
+    }
   },
 
   // 获取用户信息
@@ -547,7 +638,7 @@ Page({
         this.data.showDuration = false;
       }
     }
-    
+
 
     // var data = $.extend(true, {}, this.data.monthList.$model[index]);
 
@@ -648,11 +739,11 @@ Page({
    */
   setValue: function (event) {
     var dataset = event.currentTarget.dataset;
-      this.setData(dataset)
+    this.setData(dataset)
 
-      if (dataset.showDuration) {
-        this.cnzzCollect('点击其他月份')
-      }
+    if (dataset.showDuration) {
+      this.cnzzCollect('点击其他月份')
+    }
   },
 
   // 获取支付相关配置信息
@@ -663,40 +754,15 @@ Page({
     this._struData();
   },
 
-  // 获取支付优惠券列表的
-  _getCouponList: function () {
-    var resp = {
-      "result": "ok",
-      "data": {
-        "data": [],
-        "total": 0
-      },
-      "msg": "获取优惠券列表成功"
-    }
-
-    if (resp.result == 'ok') {
-          this._couponDereplication(resp.data.data);
-    }
-
-    // var data = {
-    //   price: +this.data.packPrice
-    // },
-    //   dataServices.get('vip').couponList({ data: data }).done(function (resp) {
-    //     if (resp.result == 'ok') {
-    //       this._couponDereplication(resp.data.data);
-    //     }
-    //   });
-  },
-
   /**
-   * [_couponDereplication 优惠券列表数据去重]
-   * @param  {[Array]} dataArray [待去重的优惠券列表]
-   */
+ * [_couponDereplication 优惠券列表数据去重]
+ * @param  {[Array]} dataArray [待去重的优惠券列表]
+ */
   _couponDereplication: function (dataArray) {
     var arr = [];
     this.data.couponList = [];
     this.data.hasUsableCoupon = false;
-    for(var i=0,len=dataArray; i<len; i++) {
+    for (var i = 0, len = dataArray; i < len; i++) {
       var v = dataArray[i];
       if (inArray(v.name, arr) == -1) {
         if (!this.data.hasUsableCoupon && +v.params.min_pay < +this.data.packPrice) {
@@ -720,6 +786,35 @@ Page({
     })
 
     this._couculatePay();
+  },
+
+  // 获取支付优惠券列表的
+  _getCouponList: function () {
+    var that = this;
+    wx.request({
+      url: 'https://vip.wps.cn/coupon/member/usablelist',
+      data: {
+        price: +this.data.packPrice
+      },
+      header: {
+        'sid': app.sid
+      },
+      success: function (res) {
+        var resp = res.data;
+        if (resp.result == 'ok') {
+          that._couponDereplication(resp.data.data);
+        }
+      }
+    })
+
+    // var data = {
+    //   price: +this.data.packPrice
+    // },
+    //   dataServices.get('vip').couponList({ data: data }).done(function (resp) {
+    //     if (resp.result == 'ok') {
+    //       this._couponDereplication(resp.data.data);
+    //     }
+    //   });
   },
 
   // 开通月份数据组装
@@ -887,28 +982,38 @@ Page({
 
   //查询用户所有的自动续费项目
   getContract: function () {
-    dataServices.get('vip').getContract({ data: {} }).done(function (resp) {
-      if (resp.result == 'ok') {
-        if (resp.data.length != 0) {
-          avalon.each(resp.data, function (i, j) {
-            if (j.subject == 'month_card') {
-              this.data.contractMap[12] = true;
-            }
+    var that = this;
+    wx.request({
+      url: 'https://vip.wps.cn/pay/autorenew/contract',
+      header: {
+        'sid': app.sid
+      },
+      success: function (res) {
+        var resp = res.data;
+        if (resp.result == 'ok') {
+          if (resp.data.length != 0) {
+            for (var i = 0, len = resp.data.length; i<len; i++) {
+              var j = resp.data[i];
+              if (j.subject == 'month_card') {
+                that.data.contractMap[12] = true;
+              }
 
-            else if (j.subject == 'baiyin') {
-              this.data.contractMap[20] = true;
-            }
+              else if (j.subject == 'baiyin') {
+                that.data.contractMap[20] = true;
+              }
 
-            else if (j.subject == 'baijin') {
-              this.data.contractMap[40] = true;
+              else if (j.subject == 'baijin') {
+                that.data.contractMap[40] = true;
+              }
             }
-          });
+          }
+
+          // 获取支付相关配置信息
+          that._getConfig();
         }
-
-        // 获取支付相关配置信息
-        this._getConfig();
       }
-    });
+    })
+
   },
 
   //是否是小米pad且为UC浏览器
@@ -1011,28 +1116,39 @@ Page({
 
   onLoad: function () {
 
-    // wx.login({
+
+    // wx.request({
+    //   url: 'https://vip.wps.cn/userinfo',
+    //   header: {
+    //     'sid': app.sid
+    //   },
     //   success: function (res) {
-    //     console.log(res);
-    //     if (res.code) {
-    //       //发起网络请求
-    //       wx.request({
-    //         url: 'https://api.weixin.qq.com/sns/jscode2session',
-    //         data: {
-    //           appid: 'wxc0cc24753a8b47d4',
-    //           secret: '81dbb638bfd45c549bfc1dc80127a6c9',
-    //           js_code: res.code,
-    //           grant_type: 'authorization_code'
-    //         },
-    //         success: function (res) {
-    //           console.log(res.data)
-    //         }
-    //       })
-    //     } else {
-    //       console.log('获取用户登录态失败！' + res.errMsg)
-    //     }
+    //     console.log(res.data)
     //   }
-    // });
+    // })
+
+    wx.login({
+      success: function (res) {
+        // console.log(res);
+        if (res.code) {
+          //发起网络请求
+          // wx.request({
+          //   url: 'https://api.weixin.qq.com/sns/jscode2session',
+          //   data: {
+          //     appid: 'wxe66629a225dbd0ef',
+          //     secret: '02b1c831acdca2f351f01dc56f3fc630',
+          //     js_code: res.code,
+          //     grant_type: 'authorization_code'
+          //   },
+          //   success: function (res) {
+          //     console.log(res.data)
+          //   }
+          // })
+        } else {
+          console.log('获取用户登录态失败！' + res.errMsg)
+        }
+      }
+    });
 
     //初始化
     this._init()
