@@ -734,7 +734,8 @@ navigator.return:visited {
     background-size: 200px 200px;
     background-repeat: no-repeat;
     background-position: -155px 13px;
-    padding-left: 66px
+    padding-left: 66px;
+    display: block;
 }
 
 .pay_ul li {

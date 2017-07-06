@@ -85,7 +85,7 @@
 
       <!-- 使用优惠券 start -->
       <view class="section">
-        <text class="yhq" bindtap="checkLogin" bindtap="couponList.length > 0 && hasUsableCoupon && selectMonthData.hasusablecoupon && setValue('showCoupon', true)" bindtap="cnzzCollect('点击优惠券')">
+        <text class="yhq" bindtap="useCoupon">
           <text class="yhq_title">使用优惠券：</text>
           <text class="yhq_name" wx:if="{{couponList.length > 0 && hasUsableCoupon && selectMonthData.hasusablecoupon}}">
             <text class="yhq_span">WPS会员专用券</text>
@@ -145,28 +145,28 @@
     <!-- 选择时长弹出框 end -->
 
     <!-- 选择优惠券弹出框 start -->
-    <div class="pop" wx:if="{{showCoupon}}">
-      <div class="box">
-        <div class="box_top">
+    <view class="pop" wx:if="{{showCoupon}}" style="display:block">
+      <view class="box">
+        <view class="box_top">
           <navigator href="javascript:void(0)" class="return" bindtap="setValue('showCoupon', false)"></navigator>
           <text class="h3 box_title box_title_big">请选择优惠券</text>
           <text class="gray">温馨提示：每次仅能使用一张</text>
-        </div>
+        </view>
         <ul class="yhq_ul">
           <!-- li选中加入 yhq_select -->
-          <li wx:for="{{couponList}}" wx:for-item="el" bindtap="selectCoupon($index, el.params.min_pay, el.params.price, el.sn)" class="{{couponSelectIndex === $index ? 'yhq_select' : ''}}">
-            <!--<text class="yhq_span" class="{{+el.params.min_pay > +packPrice ? 'gray' : ''}}">WPS会员专用券</text>
-				<text class="yhq_span" class="{{+el.params.min_pay > +packPrice ? 'gray' : ''}}">满{{el.params.min_pay}}减{{el.params.price}}元</text>-->
+          <li wx:for="{{couponList}}" wx:for-item="el" bindtap="selectCoupon(index, el.params.min_pay, el.params.price, el.sn)" class="{{couponSelectIndex === index ? 'yhq_select' : ''}}">
+            <text class="yhq_span {{el.params.min_pay > packPrice && 'gray'}}">{{el.params.min_pay}}WPS会员专用券{{packPrice}}</text>
+				<text class="yhq_span {{el.params.min_pay > packPrice && 'gray'}}">满{{el.params.min_pay}}减{{el.params.price}}元</text>
           </li>
         </ul>
-      </div>
-      <div class="mask"></div>
-    </div>
+      </view>
+      <view class="mask"></view>
+    </view>
     <!-- 选择优惠券弹出框 end -->
     <!-- 支付异常 start -->
-    <div class="pop" wx:if="showNetError">
+    <view class="pop" wx:if="showNetError">
       <text class="abnormal">网络异常，请重试</text>
-    </div>
+    </view>
     <!-- 支付异常 end -->
   </view>
 </view>

@@ -762,7 +762,7 @@ Page({
     var arr = [];
     this.data.couponList = [];
     this.data.hasUsableCoupon = false;
-    for (var i = 0, len = dataArray; i < len; i++) {
+    for (var i = 0, len = dataArray.length; i < len; i++) {
       var v = dataArray[i];
       if (inArray(v.name, arr) == -1) {
         if (!this.data.hasUsableCoupon && +v.params.min_pay < +this.data.packPrice) {
@@ -1143,6 +1143,27 @@ Page({
     } else {
 
     }
+  },
+
+  //点击使用优惠券
+  useCoupon: function() {
+    var that = this;
+    //登录校验
+    wx.checkSession({
+      success: function () {
+        //session 未过期，并且在本生命周期一直有效
+        if (that.data.couponList.length > 0 && that.data.hasUsableCoupon && that.data.selectMonthData.hasusablecoupon) {
+          that.setData({
+            showCoupon: true
+          })
+          //that.data.cnzzCollect('点击优惠券')
+        }
+      },
+      fail: function () {
+        //登录态过期
+        //wx.login() //重新登录
+  }
+})
   },
 
   onLoad: function () {
