@@ -61,7 +61,7 @@ app.datamodel = {
       "name": "WPS会员",
       "has_ad": 0,
       "memberid": 20,
-      "expire_time": false,
+      "expire_time": 1527128138,
       "enabled": [
         {
           "memberid": 20,
@@ -511,16 +511,16 @@ Page({
   // 判断会员等级，显示对应图标
   _checkLevel: function () {
     var enabled = this.data.userinfo.vip.enabled,
-        expire_time = app.datamodel.userinfo.vip.expire_time;
+      expire_time = app.datamodel.userinfo.vip.expire_time;
     if (enabled.length != 0 && expire_time) {
       var unixTimestamp = new Date(expire_time * 1000);
       var commonTime = unixTimestamp.toLocaleString();
       this.setData({
         expire_time: commonTime
-      }) 
+      })
     }
-    
-    for(var i=0,len=enabled.length; i<len; i++) {
+
+    for (var i = 0, len = enabled.length; i < len; i++) {
       if (enabled[i].memberid == 40) {
         this.setData({
           isL40: true
@@ -882,40 +882,44 @@ Page({
   gotoPay: function () {
 
     this.cnzzCollect('点击前往支付');
-    var payway = '';
+    var payway = 'wx_wap';
 
     // 非微信浏览器
-    if (!this.data.is_weixn()) {
-      payway = 'alipay_wap';
-      this.cnzzCollect('选择支付宝支付');
-    } else {
-      payway = 'wx_wap';
-      this.cnzzCollect('选择微信支付');
-    }
+    // if (!this.is_weixn()) {
+    //   payway = 'alipay_wap';
+    //   this.cnzzCollect('选择支付宝支付');
+    // } else {
+    //   payway = 'wx_wap';
+    //   this.cnzzCollect('选择微信支付');
+    // }
 
     // 为收集，做的延时处理
+    var that = this;
     setTimeout(function () {
-      if (!this.data.isLogin) {
+      if (!that.data.isLogin) {
         login.jumpLogin();
         return;
       }
 
-      this.data.payway = payway;
-      var datamodel = window.datamodel;
-      var contract = this.data.selectMonthData.monthNum ? 0 : 1;
+      that.data.payway = payway;
+      var datamodel = app.datamodel;
+      var contract = that.data.selectMonthData.monthNum ? 0 : 1;
       var remark = {
-        openid: app.datamodel.openid
+        // openid: app.datamodel.openid
+        openid: 'oY73-trNNEGcC8Mlekew7NXda_g0'
       }
-      var csource = util.getQueryStringRegExp('csource') || 'vip';
-      var payconfig = util.getQueryStringRegExp('payconfig');
+      var csource = 'vip';
+      var payconfig = '';
+      // var csource = util.getQueryStringRegExp('csource') || 'vip';
+      // var payconfig = util.getQueryStringRegExp('payconfig');
       var data = {
-        memtype: this.data.cardSelected,
-        count: this.data.selectMonthData.monthNum ? this.data.selectMonthData.monthNum * 31 : 31,
-        payway: this.data.payway,
+        memtype: that.data.cardSelected,
+        count: that.data.selectMonthData.monthNum ? that.data.selectMonthData.monthNum * 31 : 31,
+        payway: that.data.payway,
         prepay: 0,
         remark: datamodel ? JSON.stringify(remark) : '',
         contract: contract,
-        sn: (this.data.couponList.length > 0 && this.data.hasUsableCoupon && this.data.selectMonthData.hasusablecoupon) ? this.data.couponList[this.data.couponSelectIndex].sn : '',
+        sn: (that.data.couponList.length > 0 && that.data.hasUsableCoupon && that.data.selectMonthData.hasusablecoupon) ? that.data.couponList[that.data.couponSelectIndex].sn : '',
         csource: csource,
         payconfig: payconfig,
         apiversion: 2
@@ -933,12 +937,12 @@ Page({
         // 自动续费
         if (contract == 1) {
           var wxPayLink = 'https://vip.wps.cn/pay/webpay?memtype=' + data.memtype + '&count=' + data.count + '&payway=' + data.payway + '&prepay=0' + '&remark=' + data.remark + '&contract=1&sn=' + data.sn + '&csource=' + csource + '&apiversion=2&payconfig=' + payconfig;
-          location.href = wxPayLink;
+          //location.href = wxPayLink;
         } else {
           // 储存当前地址，支付成功后跳转
-          cookie.set('paySuccessCallBackURL', location.href);
+          //cookie.set('paySuccessCallBackURL', location.href);
           // 调用预支付接口，前端或者后端调用，返回prepay_id、paySign、appid等
-          this.H5prepay(data);
+          that.H5prepay(data);
         }
       }
     }, 500);
@@ -946,22 +950,46 @@ Page({
 
   //调用预支付接口
   H5prepay: function (data) {
-    dataServices.get('vip').wxpay({ data: data }).done(function (resp) {
-      if (resp.result == 'ok') {
-
-        this.data.postData = {
-          'appId': resp.data.appId, //公众号id
-          'timeStamp': resp.data.timeStamp + '', //时间戳
-          'nonceStr': resp.data.nonceStr, //随机字符串
-          'package': resp.data.package, //订单详情扩展字符串
-          'signType': 'MD5', //签名方式
-          'paySign': resp.data.paySign, //签名
-        };
-
-        // h5准备调起支付API
-        onBridgebefore();
+    wx.request({
+      url: 'https://vip.wps.cn/pay/webpay',
+      data: data,
+      method: 'POST',
+      header: {
+        sid: app.sid
+      },
+      success: function (res) {
+        var resp = res.data;
+        if (resp.result == 'ok') {
+          wx.requestPayment({
+            'timeStamp': resp.data.timeStamp + '', //时间戳
+            'nonceStr': resp.data.nonceStr, //随机字符串
+            'package': resp.data.package, //订单详情扩展字符串
+            'signType': 'MD5', //签名方式
+            'paySign': resp.data.paySign, //签名
+            'success': function (res) {
+            },
+            'fail': function (res) {
+            }
+          })
+        }
       }
-    });
+    })
+    // dataServices.get('vip').wxpay({ data: data }).done(function (resp) {
+    //   if (resp.result == 'ok') {
+
+    //     this.data.postData = {
+    //       'appId': resp.data.appId, //公众号id
+    //       'timeStamp': resp.data.timeStamp + '', //时间戳
+    //       'nonceStr': resp.data.nonceStr, //随机字符串
+    //       'package': resp.data.package, //订单详情扩展字符串
+    //       'signType': 'MD5', //签名方式
+    //       'paySign': resp.data.paySign, //签名
+    //     };
+
+    //     h5准备调起支付API
+    //     onBridgebefore();
+
+
   },
 
   /**
@@ -992,7 +1020,7 @@ Page({
         var resp = res.data;
         if (resp.result == 'ok') {
           if (resp.data.length != 0) {
-            for (var i = 0, len = resp.data.length; i<len; i++) {
+            for (var i = 0, len = resp.data.length; i < len; i++) {
               var j = resp.data[i];
               if (j.subject == 'month_card') {
                 that.data.contractMap[12] = true;
@@ -1086,6 +1114,9 @@ Page({
 
   //点击缓冲
   isRepeatClick: function () {
+
+    this.gotoPay();
+    return;
 
     var cookie = document.cookie;
 

@@ -108,7 +108,7 @@
         </text>
         <text class="gray">{{'（省' + saveMoney + '元）'}}</text>
       </view>
-      <navigator href="javascript:void(0)" class="pay_btn" bindtap="isRepeatClick()">前往支付</navigator>
+      <navigator href="javascript:void(0)" class="pay_btn" bindtap="isRepeatClick">前往支付</navigator>
       <!-- 按钮置灰 pay_btn_gray -->
     </view>
     <!-- 前往支付 end -->
