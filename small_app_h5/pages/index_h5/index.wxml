@@ -148,13 +148,13 @@
     <view class="pop" wx:if="{{showCoupon}}" style="display:block">
       <view class="box">
         <view class="box_top">
-          <navigator href="javascript:void(0)" class="return" bindtap="setValue('showCoupon', false)"></navigator>
+          <navigator href="javascript:void(0)" class="return" data-show-coupon="{{false}}" bindtap="setValue"></navigator>
           <text class="h3 box_title box_title_big">请选择优惠券</text>
           <text class="gray">温馨提示：每次仅能使用一张</text>
         </view>
         <ul class="yhq_ul">
           <!-- li选中加入 yhq_select -->
-          <li wx:for="{{couponList}}" wx:for-item="el" bindtap="selectCoupon(index, el.params.min_pay, el.params.price, el.sn)" class="{{couponSelectIndex === index ? 'yhq_select' : ''}}">
+          <li wx:for="{{couponList}}" wx:for-item="el" data-index="{{index}}" data-min_pay="{{el.params.min_pay}}" data-price="{{el.params.price}}" data-couponSn="{{el.sn}}" bindtap="selectCoupon" class="{{couponSelectIndex === index ? 'yhq_select' : ''}}">
             <text class="yhq_span {{el.params.min_pay > packPrice && 'gray'}}">{{el.params.min_pay}}WPS会员专用券{{packPrice}}</text>
 				<text class="yhq_span {{el.params.min_pay > packPrice && 'gray'}}">满{{el.params.min_pay}}减{{el.params.price}}元</text>
           </li>

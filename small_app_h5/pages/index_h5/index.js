@@ -326,7 +326,7 @@ app.datamodel = {
   "code": ""
 }
 
-app.sid = 'afb6698db2231630893b75e558d7f0ca09694d33000e3b7079';
+app.sid = '64fab015e983e4316651ee01d5266b33d9991ea9000e3b7079';
 
 var login = require('controllers/login.js');
 
@@ -692,15 +692,24 @@ Page({
    * @param  {[String]} price [减多少]
    * @param  {[String]} price [优惠券sn码]
    */
-  selectCoupon: function (index, min_pay, price, couponSn) {
+  selectCoupon: function (event, index, min_pay, price, couponSn) {
+    var dataset = event.currentTarget.dataset,
+      index = dataset.index,
+      min_pay = dataset.min_pay,
+      price = dataset.price,
+      couponSn = dataset.couponSn;
+
     if (+min_pay > +this.data.packPrice) {
       return;
     }
-    this.data.couponSelectIndex = index;
-    this.data.par_min_pay = min_pay;
-    this.data.par_price = price;
-    this.data.showCoupon = false;
-    this.data.couponSn = couponSn;
+    
+    this.setData({
+      couponSelectIndex: index,
+      par_min_pay: min_pay,
+      par_price: price,
+      showCoupon: false,
+      couponSn: couponSn
+    })
     this._couculatePay();
   },
 
@@ -1146,7 +1155,7 @@ Page({
   },
 
   //点击使用优惠券
-  useCoupon: function() {
+  useCoupon: function () {
     var that = this;
     //登录校验
     wx.checkSession({
@@ -1162,8 +1171,8 @@ Page({
       fail: function () {
         //登录态过期
         //wx.login() //重新登录
-  }
-})
+      }
+    })
   },
 
   onLoad: function () {
