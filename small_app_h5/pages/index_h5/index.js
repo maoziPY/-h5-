@@ -3,326 +3,8 @@
 var app = getApp()
 app.datamodel = {
   "openid": "",
-  "userinfo": {
-    "account": "",
-    "address": "",
-    "city": "",
-    "companyid": 0,
-    "country": "",
-    "departmentid": "",
-    "email": "",
-    "firstname": "",
-    "lastname": "",
-    "loginmode": "qq:",
-    "nickname": "帽子",
-    "phonenumber": "",
-    "pic": "http://q.qlogo.cn/qqapp/100360965/8A72A2646310016A5D0CD66BC2CD1235/100",
-    "postal": "",
-    "province": "",
-    "regtime": 1491640270,
-    "role": [
-      "user"
-    ],
-    "sex": "male",
-    "status": "active",
-    "userid": 238776441,
-    "exp": 13854,
-    "level": 19,
-    "privilege": [
-      {
-        "spid": "data_recover",
-        "times": 0,
-        "expire_time": 1526091338
-      },
-      {
-        "spid": "ocr",
-        "times": 0,
-        "expire_time": 1526091338
-      },
-      {
-        "spid": "pdf2doc",
-        "times": 0,
-        "expire_time": 1526091338
-      },
-      {
-        "spid": "pdf_merge",
-        "times": 0,
-        "expire_time": 1526091338
-      },
-      {
-        "spid": "pdf_split",
-        "times": 0,
-        "expire_time": 1526091338
-      }
-    ],
-    "total_buy": 0,
-    "total_cost": -8211,
-    "vip": {
-      "name": "WPS会员",
-      "has_ad": 0,
-      "memberid": 20,
-      "expire_time": 1527128138,
-      "enabled": [
-        {
-          "memberid": 20,
-          "name": "白银会员",
-          "expire_time": 1527128138
-        },
-        {
-          "memberid": 12,
-          "name": "稻壳会员",
-          "expire_time": 1505037425
-        }
-      ]
-    },
-    "wealth": 30443,
-    "mb_discount": 0.85,
-    "companyname": ""
-  },
-  "uniform_pay_config": {
-    "defaultconfig": {
-      "advert": "超级会员限时3折",
-      "id": 20,
-      "payway": "wx_qrcode",
-      "random_month": 6,
-      "recommendid": 20,
-      "service_name": "服务条款",
-      "service_url": "https://vip.wps.cn/agreement/",
-      "term_name": "查看特权",
-      "term_url": "",
-      "time": 12
-    },
-    "discount": {
-      "12": [
-        {
-          "discount": 0.75,
-          "max": "contract",
-          "mini": "contract"
-        },
-        {
-          "discount": 0.3,
-          "max": 999,
-          "mini": 12
-        },
-        {
-          "discount": 0.5,
-          "max": 11,
-          "mini": 6
-        },
-        {
-          "discount": 0.6,
-          "max": 5,
-          "mini": 3
-        },
-        {
-          "discount": 1,
-          "max": 2,
-          "mini": 1
-        }
-      ],
-      "20": [
-        {
-          "discount": 0.46,
-          "max": "contract",
-          "mini": "contract"
-        },
-        {
-          "discount": 0.35,
-          "max": 999,
-          "mini": 12,
-          "sales": "限时5折"
-        },
-        {
-          "discount": 0.6,
-          "max": 11,
-          "mini": 6
-        },
-        {
-          "discount": 0.6,
-          "max": 5,
-          "mini": 3
-        },
-        {
-          "discount": 1,
-          "max": 2,
-          "mini": 1
-        }
-      ],
-      "40": [
-        {
-          "discount": 0.7,
-          "max": "contract",
-          "mini": "contract"
-        },
-        {
-          "discount": 0.35,
-          "max": 999,
-          "mini": 12,
-          "sales": "限时5折"
-        },
-        {
-          "discount": 0.65,
-          "max": 5,
-          "mini": 3
-        },
-        {
-          "discount": 0.6,
-          "max": 11,
-          "mini": 6
-        }
-      ]
-    },
-    "payway": [
-      "zfb_qrcode",
-      "wx_qrcode",
-      "daomi"
-    ],
-    "type": [
-      {
-        "default_time": 12,
-        "discount": {
-          "1": {
-            "angle": "",
-            "cost_fee": 15,
-            "total_fee": 15
-          },
-          "3": {
-            "angle": "6.5折",
-            "cost_fee": 45,
-            "total_fee": 29
-          },
-          "12": {
-            "angle": "5折",
-            "cost_fee": 180,
-            "total_fee": 89
-          },
-          "24": {
-            "angle": "5折",
-            "cost_fee": 360,
-            "total_fee": 169
-          },
-          "contract": {
-            "angle": "次月6折",
-            "cost_fee": 15,
-            "total_fee": 9
-          }
-        },
-        "enable_coupon": [
-          1,
-          3,
-          12,
-          24
-        ],
-        "hideMemberComparison": "true",
-        "id": 20,
-        "name": "WPS会员",
-        "payunit": "个月",
-        "privilegeHtml": "wpsPrivilegeHtml",
-        "privilege_ad": "尊享21项办公特权",
-        "property": "WPS会员提供高质量办公服务，尊享21项办公特权！",
-        "time": [
-          "contract",
-          12,
-          3,
-          24
-        ],
-        "type": "baiyin",
-        "typeunit": "月",
-        "unitprice": 15
-      },
-      {
-        "default_time": 12,
-        "discount": {
-          "1": {
-            "angle": "",
-            "cost_fee": 20,
-            "total_fee": 19.9
-          },
-          "3": {
-            "angle": "6.5折",
-            "cost_fee": 60,
-            "total_fee": 39.9
-          },
-          "12": {
-            "angle": "5折",
-            "cost_fee": 240,
-            "total_fee": 119
-          },
-          "contract": {
-            "angle": "推荐",
-            "cost_fee": 20,
-            "total_fee": 15
-          }
-        },
-        "enable_coupon": [
-          12
-        ],
-        "hideMemberComparison": "true",
-        "id": 12,
-        "name": "稻壳会员",
-        "payunit": "个月",
-        "privilege_ad": "模板免费下载",
-        "property": "稻壳会员提供优质办公资源，涵盖模板、学习资料等，轻松制霸校园职场！",
-        "time": [
-          "contract",
-          12,
-          3,
-          1
-        ],
-        "type": "month_card",
-        "typeunit": "月",
-        "unitprice": 20
-      },
-      {
-        "angle": "",
-        "angle_class": "forsale_rcm",
-        "default_time": 12,
-        "disable_coupon": [
-          12,
-          3,
-          1,
-          "contract"
-        ],
-        "discount": {
-          "1": {
-            "angle": "",
-            "cost_fee": 30,
-            "total_fee": 30
-          },
-          "3": {
-            "angle": "6.5折",
-            "cost_fee": 90,
-            "total_fee": 59
-          },
-          "12": {
-            "angle": "5折",
-            "cost_fee": 360,
-            "total_fee": 179
-          },
-          "contract": {
-            "angle": "次月7折",
-            "cost_fee": 30,
-            "total_fee": 21
-          }
-        },
-        "hideMemberComparison": "true",
-        "id": 40,
-        "name": "超级会员",
-        "payunit": "个月",
-        "privilege_ad": "免费下载模板",
-        "property": "包含WPS会员和稻壳会员的所有特权！",
-        "time": [
-          "contract",
-          12,
-          3,
-          1
-        ],
-        "type": "baijin",
-        "typeunit": "月",
-        "unitprice": 30
-      }
-    ]
-  },
+  "userinfo": "",
+  "uniform_pay_config": "",
   "code": ""
 }
 
@@ -446,33 +128,46 @@ Page({
   },
 
   _init: function () {
-    this.setData({
-      isLogin: login.checkLogin()
+
+    wx.request({
+      url: 'https://vip.wps.cn/userinfo',
+      header: {
+        'sid': app.sid
+      },
+      success: function (res) {
+        var resp = res.data;
+        if (resp.result == 'ok') {
+          this.setData({
+            myLevel: resp.data.vip.memberid,
+            userinfo: resp.data
+          })
+          app.datamodel.userinfo = resp.data;
+
+          this.setData({
+            isLogin: login.checkLogin()
+          })
+
+          //_checkJump();
+
+          if (this.data.isLogin) {
+            // 查询用户所有的自动续费项目
+            this.getContract();
+
+            // 判断会员等级，显示对应图标
+            this._checkLevel();
+          }
+
+          if (!this.data.isLogin) {
+            // 获取支付相关配置信息
+            this._getConfig();
+          }
+
+          // 页面展示量收集
+          // cnzzCollect('页面展示量ALL');
+          // cnzzCollect('页面展示量+' + util.getQueryStringRegExp('csource'));
+        }
+      }.bind(this)
     })
-
-    //_checkJump();
-
-    if (this.data.isLogin) {
-      // 查询用户所有的自动续费项目
-      this.getContract();
-
-      // 判断会员等级，显示对应图标
-      this._checkLevel();
-    }
-
-    if (!this.data.isLogin) {
-      // 获取支付相关配置信息
-      this._getConfig();
-    }
-
-    if (this.data.isLogin) {
-      // 获取用户信息
-      //this._getUserInfo();
-    }
-
-    // 页面展示量收集
-    // cnzzCollect('页面展示量ALL');
-    // cnzzCollect('页面展示量+' + util.getQueryStringRegExp('csource'));
   },
 
   // 判断是否需要二次跳转
@@ -537,15 +232,6 @@ Page({
         })
       }
     }
-  },
-
-  // 获取用户信息
-  _getUserInfo: function () {
-    dataServices.get('vip').getUserinfo({ data: {} }).done(function (resp) {
-      if (resp.result == 'ok') {
-        this.data.myLevel = resp.data.vip.memberid;
-      }
-    });
   },
 
   // 登录检验
@@ -702,7 +388,7 @@ Page({
     if (+min_pay > +this.data.packPrice) {
       return;
     }
-    
+
     this.setData({
       couponSelectIndex: index,
       par_min_pay: min_pay,
@@ -757,10 +443,24 @@ Page({
 
   // 获取支付相关配置信息
   _getConfig: function () {
-
-    var data = app.datamodel.uniform_pay_config;
-    this.data._configData = data;
-    this._struData();
+    wx.request({
+      url: 'https://vipapi.wps.cn/pay_config/v1/config/member',
+      data: {
+        csource: 'vip',
+        payconfig: 'vip'
+      },
+      success: function(res) {
+        var resp = res.data;
+        if (resp.result == 'ok') {
+          var data = resp.data;
+          this.setData({
+            _configData: data
+          })
+          app.uniform_pay_config = data;
+          this._struData();
+        }
+      }.bind(this)
+    })    
   },
 
   /**
@@ -815,15 +515,6 @@ Page({
         }
       }
     })
-
-    // var data = {
-    //   price: +this.data.packPrice
-    // },
-    //   dataServices.get('vip').couponList({ data: data }).done(function (resp) {
-    //     if (resp.result == 'ok') {
-    //       this._couponDereplication(resp.data.data);
-    //     }
-    //   });
   },
 
   // 开通月份数据组装
@@ -983,22 +674,6 @@ Page({
         }
       }
     })
-    // dataServices.get('vip').wxpay({ data: data }).done(function (resp) {
-    //   if (resp.result == 'ok') {
-
-    //     this.data.postData = {
-    //       'appId': resp.data.appId, //公众号id
-    //       'timeStamp': resp.data.timeStamp + '', //时间戳
-    //       'nonceStr': resp.data.nonceStr, //随机字符串
-    //       'package': resp.data.package, //订单详情扩展字符串
-    //       'signType': 'MD5', //签名方式
-    //       'paySign': resp.data.paySign, //签名
-    //     };
-
-    //     h5准备调起支付API
-    //     onBridgebefore();
-
-
   },
 
   /**
