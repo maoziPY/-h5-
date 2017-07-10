@@ -142,30 +142,29 @@ Page({
             userinfo: resp.data
           })
           app.datamodel.userinfo = resp.data;
+        }
+        this.setData({
+          isLogin: login.checkLogin()
+        })
 
-          this.setData({
-            isLogin: login.checkLogin()
-          })
+        //_checkJump();
 
-          //_checkJump();
+        if (this.data.isLogin) {
+          // 查询用户所有的自动续费项目
+          this.getContract();
 
-          if (this.data.isLogin) {
-            // 查询用户所有的自动续费项目
-            this.getContract();
+          // 判断会员等级，显示对应图标
+          this._checkLevel();
+        }
 
-            // 判断会员等级，显示对应图标
-            this._checkLevel();
-          }
-
-          if (!this.data.isLogin) {
-            // 获取支付相关配置信息
-            this._getConfig();
-          }
+        if (!this.data.isLogin) {
+          // 获取支付相关配置信息
+          this._getConfig();
+        }
 
           // 页面展示量收集
           // cnzzCollect('页面展示量ALL');
           // cnzzCollect('页面展示量+' + util.getQueryStringRegExp('csource'));
-        }
       }.bind(this)
     })
   },
